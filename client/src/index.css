@@ -1,3 +1,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  * {
+    font-family: "Jost", sans-serif;
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply py-16 px-24 bg-grey-light relative overflow-x-hidden min-h-screen;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-bold;
+  }
+
+  h3 {
+    @apply text-2xl;
+  }
+}
+
+@layer components {
+  .feedbackCategory {
+    @apply py-2 px-6 bg-grey-light rounded-lg text-blue-default font-bold transition-colors duration-200 hover:bg-grey-hover cursor-pointer;
+  }
+
+  .sortItem {
+    @apply flex justify-between px-6 py-3 border-b transition duration-300 cursor-pointer border-b-slate-300 hover:text-purple-hover last:border-0;
+  }
+}
+
+@layer utilities {
+  .active {
+    transform: translateY(80px);
+    pointer-events: all;
+    opacity: 1;
+    transition: all 0.3s;
+  }
+}
