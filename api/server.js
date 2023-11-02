@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 require("dotenv").config();
 
 // Feedback model
@@ -9,6 +10,7 @@ const app = express();
 
 // req.body'i kullanmak için lazım
 app.use(express.json());
+app.use(cors());
 
 const PORT = process.env.PORT || 3000;
 const DB = process.env.DATABASE;
@@ -32,7 +34,7 @@ app.get("/", (req, res) => {
 
 // ! CRUD OPERATIONS
 
-app.post("/feedback/create", async (req, res) => {
+app.post("/feedback/add", async (req, res) => {
   const feedback = await Feedback.create(req.body);
 
   res.status(200).json({

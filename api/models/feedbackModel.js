@@ -4,11 +4,26 @@ const { Schema } = mongoose;
 
 const FeedbackSchema = new Schema(
   {
-    title: String,
-    detail: String,
-    category: String,
-    totalUpvotes: Number,
-    totalComments: Number,
+    title: {
+      type: String,
+      required: true,
+    },
+    details: {
+      type: String,
+      default: "Feature",
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    totalUpvotes: {
+      type: Number,
+      default: 0,
+    },
+    totalComments: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

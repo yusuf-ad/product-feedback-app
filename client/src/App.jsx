@@ -1,20 +1,63 @@
-import { RoadmapSidebar } from "./components/RoadmapSidebar";
-import { SuggestionsHeader } from "./components/SuggestionsHeader";
-import { FeedbackBoard } from "./components/FeedbackBoard";
-import { FeedbackCategories } from "./components/FeedbackCategories";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import AppLayout from "./components/Layout/AppLayout";
+import { FeedbackAdd } from "./components/Feedbacks/FeedbackAdd";
+
+const BASE_API = "http://localhost:3100";
 
 function App() {
+  const [feedbacks, setFeedbacks] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function getFeedbacks() {
+      setIsLoading(true);
+      try {
+        const res = await fetch(`${BASE_API}/feedbacks`);
+        const { data } = await res.json();
+
+        console.log(data.feedbacks);
+
+        setFeedbacks(data.feedbacks);
+      } catch (err) {
+        console.log(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    getFeedbacks();
+  }, []);
+
+  async function handleAddFeedback(feedback) {
+    const res = await fetch(`${BASE_API}/feedback/add`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(feedback),
+    });
+    const data = await res.json();
+
+    setFeedbacks((feedbacks) => [...feedbacks, data.feedback]);
+  }
+
   return (
-    <div className="container grid grid-cols-4 gap-12">
-      <aside className="col-span-1">
-        <FeedbackBoard />
-        <FeedbackCategories />
-        <RoadmapSidebar />
-      </aside>
-      <section className="col-span-3 bg-red-400 h-4">
-        <SuggestionsHeader />
-      </section>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          index
+          element={<AppLayout feedbacks={feedbacks} isLoading={isLoading} />}
+        />
+        <Route
+          path="/feedback/add"
+          element={<FeedbackAdd handleAddFeedback={handleAddFeedback} />}
+        />
+        <Route
+          path="*"
+          element={<h1 className="text-red-700 text-4xl"> 404 NOT FOUND</h1>}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
