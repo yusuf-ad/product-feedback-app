@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import { useNewFeedback } from "../../contexts/NewFeedbackContext";
 
 const menuItems = ["Feature", "UI", "UX", "Enhancement", "Bug"];
 
-function DropdownButton({ setValue }) {
+function DropdownButton() {
+  const { dispatch } = useNewFeedback();
+
   const [active, setActive] = useState(menuItems[0]);
 
   const menu = useRef(null);
@@ -20,8 +23,8 @@ function DropdownButton({ setValue }) {
   }
 
   useEffect(() => {
-    setValue(active);
-  }, [active, setValue]);
+    dispatch({ type: "changeCategory", payload: active });
+  }, [active, dispatch]);
 
   return (
     <div onClick={handleClick} className=" relative flex items-center mt-1">

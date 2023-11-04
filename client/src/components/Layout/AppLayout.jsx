@@ -7,8 +7,11 @@ import Main from "../Layout/Main";
 import Section from "../Layout/Section";
 import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
 import { Feedback } from "../Feedbacks/Feedback";
+import { useFeedbacks } from "../../contexts/FeedbacksContext";
 
-function AppLayout({ feedbacks, isLoading }) {
+function AppLayout() {
+  const { feedbacks, isLoading } = useFeedbacks();
+
   return (
     <div className="container grid grid-cols-4 gap-12">
       <Aside>

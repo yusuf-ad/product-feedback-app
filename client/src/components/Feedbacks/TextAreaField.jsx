@@ -1,11 +1,15 @@
+import { useNewFeedback } from "../../contexts/NewFeedbackContext";
 import Error from "../UI/Error";
 
-function TextAreaField({ detailsInput, details, setDetails, error, setError }) {
-  function handleChange(e) {
-    setDetails(e.target.value);
+function TextAreaField() {
+  const { detailsInput, details, errorMsg, dispatch } = useNewFeedback();
 
-    if (!e.target.value.trim()) setError("Can't be empty");
-    else setError("");
+  function handleChange(e) {
+    dispatch({ type: "changeDetails", payload: e.target.value });
+
+    if (!e.target.value.trim())
+      dispatch({ type: "error", payload: "Can't be empty" });
+    else dispatch({ type: "error", payload: "" });
   }
 
   return (
@@ -21,7 +25,7 @@ function TextAreaField({ detailsInput, details, setDetails, error, setError }) {
         value={details}
         onChange={handleChange}
         className={`shadow-sm mt-5 bg-grey-light h-24 px-6 py-4 rounded-md w-full resize-none ${
-          error
+          errorMsg
             ? "outline-red-default/70 text-red-default"
             : "outline-purple-default/50"
         } `}
@@ -29,7 +33,7 @@ function TextAreaField({ detailsInput, details, setDetails, error, setError }) {
         id="detail"
         maxLength={255}
       ></textarea>
-      {error && <Error message="Can't be empty" />}
+      {errorMsg && <Error message="Can't be empty" />}
     </div>
   );
 }

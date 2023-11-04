@@ -1,4 +1,3 @@
-import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import InputField from "./InputField";
@@ -6,52 +5,21 @@ import TextAreaField from "./TextAreaField";
 import CategoryField from "./CategoryField";
 import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
 
-export function FeedbackAdd({ handleAddFeedback, isLoading }) {
-  const [title, setTitle] = useState("");
-  const [details, setDetails] = useState("");
-  const [category, setCategory] = useState("");
-  const [titleError, setTitleError] = useState("");
-  const [detailsError, setDetailsError] = useState("");
+import { useFeedbacks } from "../../contexts/FeedbacksContext";
+import { useNewFeedback } from "../../contexts/NewFeedbackContext";
+
+export function FeedbackAdd() {
+  const { handleSubmit } = useNewFeedback();
+
+  const { isLoading } = useFeedbacks();
 
   const navigate = useNavigate();
-
-  const detailsInput = useRef(null);
-  const titleInput = useRef(null);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-
-    if (!title.trim()) {
-      titleInput.current.focus();
-      return setTitleError("Can't be empty");
-    }
-
-    if (!details.trim()) {
-      detailsInput.current.focus();
-      return setDetailsError("Can't be empty");
-    }
-
-    const newFeedback = {
-      title: title.trim(),
-      details: details.trim(),
-      category,
-    };
-
-    await handleAddFeedback(newFeedback);
-
-    setTitle("");
-    setDetails("");
-    setDetailsError("");
-    setTitleError("");
-
-    navigate("/");
-  }
 
   if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="container mx-auto max-w-2xl  ">
-      <button onClick={() => navigate("/")} className="flex items-center group">
+      <button onClick={handleSubmit} className="flex items-center group">
         <span>
           <i className="text-blue-default  text-xs mr-4 fa-solid fa-chevron-left"></i>
         </span>
@@ -64,23 +32,11 @@ export function FeedbackAdd({ handleAddFeedback, isLoading }) {
         <h1 className="text-3xl">Create New Feedback</h1>
 
         <form onSubmit={handleSubmit} className="mt-12 flex flex-col gap-8">
-          <InputField
-            titleInput={titleInput}
-            title={title}
-            setTitle={setTitle}
-            error={titleError}
-            setError={setTitleError}
-          />
+          <InputField />
 
-          <CategoryField setCategory={setCategory} />
+          <CategoryField />
 
-          <TextAreaField
-            detailsInput={detailsInput}
-            details={details}
-            setDetails={setDetails}
-            error={detailsError}
-            setError={setDetailsError}
-          />
+          <TextAreaField />
 
           <div className="flex gap-4 justify-end mt-12">
             <button

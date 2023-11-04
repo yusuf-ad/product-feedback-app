@@ -1,6 +1,6 @@
 import DropdownButton from "../UI/DropdownButton";
 
-function CategoryField({ setCategory }) {
+function CategoryField() {
   return (
     <div>
       <label className="font-bold text-lg" htmlFor="category">
@@ -8,7 +8,7 @@ function CategoryField({ setCategory }) {
       </label>
       <p className="text-gray-600 ">Choose a category for your feedback</p>
 
-      <DropdownButton setValue={setCategory} />
+      <DropdownButton />
     </div>
   );
 }

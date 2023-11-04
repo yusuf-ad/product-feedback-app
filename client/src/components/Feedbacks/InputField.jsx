@@ -1,11 +1,15 @@
+import { useNewFeedback } from "../../contexts/NewFeedbackContext";
 import Error from "../UI/Error";
 
-function InputField({ titleInput, title, setTitle, error, setError }) {
-  function handleChange(e) {
-    setTitle(e.target.value);
+function InputField() {
+  const { titleInput, title, dispatch, errorMsg } = useNewFeedback();
 
-    if (!e.target.value.trim()) setError("Can't be empty");
-    else setError("");
+  function handleChange(e) {
+    dispatch({ type: "changeTitle", payload: e.target.value });
+
+    if (!e.target.value.trim())
+      dispatch({ type: "error", payload: "Can't be empty" });
+    else dispatch({ type: "error", payload: "" });
   }
 
   return (
@@ -19,14 +23,14 @@ function InputField({ titleInput, title, setTitle, error, setError }) {
         value={title}
         onChange={handleChange}
         className={`shadow-sm mt-5 bg-grey-light px-6 h-14 rounded-md w-full ${
-          error
+          errorMsg
             ? "outline-red-default/70 text-red-default"
             : "outline-purple-default/50"
         }`}
         id="title"
         type="text"
       />
-      {error && <Error message="Can't be empty" />}
+      {errorMsg && <Error message="Can't be empty" />}
     </div>
   );
 }
