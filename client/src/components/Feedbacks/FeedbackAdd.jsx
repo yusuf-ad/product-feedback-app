@@ -1,9 +1,12 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DropdownButton from "../UI/DropdownButton";
-import Error from "../UI/Error";
 
-export function FeedbackAdd({ handleAddFeedback }) {
+import InputField from "./InputField";
+import TextAreaField from "./TextAreaField";
+import CategoryField from "./CategoryField";
+import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
+
+export function FeedbackAdd({ handleAddFeedback, isLoading }) {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [category, setCategory] = useState("");
@@ -12,45 +15,39 @@ export function FeedbackAdd({ handleAddFeedback }) {
 
   const navigate = useNavigate();
 
-  const titleInput = useRef(null);
   const detailsInput = useRef(null);
+  const titleInput = useRef(null);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (!title.trim()) {
-      setTitleError("Can't be empty");
-      titleInput.current.classList.add(
-        "outline-red-default/70",
-        "text-red-default"
-      );
       titleInput.current.focus();
-      return;
+      return setTitleError("Can't be empty");
     }
 
     if (!details.trim()) {
-      setDetailsError("Can't be empty");
-      detailsInput.current.classList.add(
-        "outline-red-default/70",
-        "text-red-default"
-      );
       detailsInput.current.focus();
-      return;
+      return setDetailsError("Can't be empty");
     }
 
     const newFeedback = {
-      title,
-      details,
+      title: title.trim(),
+      details: details.trim(),
       category,
     };
 
-    handleAddFeedback(newFeedback);
+    await handleAddFeedback(newFeedback);
 
     setTitle("");
     setDetails("");
     setDetailsError("");
     setTitleError("");
+
+    navigate("/");
   }
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="container mx-auto max-w-2xl  ">
@@ -63,78 +60,27 @@ export function FeedbackAdd({ handleAddFeedback }) {
         </span>
       </button>
 
-      <div className="bg-white px-8 py-16 mt-16 rounded-xl shadow-sm">
+      <div className="relative bg-white px-8 py-16 mt-20 rounded-xl shadow-sm">
         <h1 className="text-3xl">Create New Feedback</h1>
 
-        <form onSubmit={handleSubmit} className="mt-12">
-          <div className="mb-8 ">
-            <label className="font-bold text-lg" htmlFor="title">
-              Feedback Title
-            </label>
-            <p className="text-gray-600 ">Add a short, descriptive headline</p>
-            <input
-              ref={titleInput}
-              value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
+        <form onSubmit={handleSubmit} className="mt-12 flex flex-col gap-8">
+          <InputField
+            titleInput={titleInput}
+            title={title}
+            setTitle={setTitle}
+            error={titleError}
+            setError={setTitleError}
+          />
 
-                if (!title.trim()) {
-                  titleInput.current.classList.remove(
-                    "outline-red-default/70",
-                    "text-red-default"
-                  );
+          <CategoryField setCategory={setCategory} />
 
-                  setTitleError("");
-                }
-              }}
-              className="shadow-sm mt-5 bg-grey-light px-6 h-14 rounded-md w-full outline-purple-default/50"
-              id="title"
-              type="text"
-            />
-            {titleError && <Error message="Can't be empty" />}
-          </div>
-
-          <div className="mb-8">
-            <label className="font-bold text-lg" htmlFor="category">
-              Category
-            </label>
-            <p className="text-gray-600 ">
-              Choose a category for your feedback
-            </p>
-
-            <DropdownButton setValue={setCategory} />
-          </div>
-
-          <div className="mb-8 ">
-            <label className="font-bold text-lg" htmlFor="detail">
-              Feedback Detail
-            </label>
-            <p className="text-gray-600 ">
-              Include any specific comments on what should be improved, added,
-              etc.
-            </p>
-            <textarea
-              ref={detailsInput}
-              value={details}
-              onChange={(e) => {
-                setDetails(e.target.value);
-
-                if (!details.trim()) {
-                  detailsInput.current.classList.remove(
-                    "outline-red-default/70",
-                    "text-red-default"
-                  );
-
-                  setDetailsError("");
-                }
-              }}
-              className="shadow-sm mt-5 bg-grey-light h-24 px-6 py-4 rounded-md w-full outline-purple-default/50 resize-none"
-              name="feedback-detail"
-              id="detail"
-              maxLength={255}
-            ></textarea>
-            {detailsError && <Error message="Can't be empty" />}
-          </div>
+          <TextAreaField
+            detailsInput={detailsInput}
+            details={details}
+            setDetails={setDetails}
+            error={detailsError}
+            setError={setDetailsError}
+          />
 
           <div className="flex gap-4 justify-end mt-12">
             <button
@@ -148,6 +94,10 @@ export function FeedbackAdd({ handleAddFeedback }) {
             </button>
           </div>
         </form>
+
+        <div className="absolute -top-8 left-6 bg-customGradient w-16 h-16 rounded-full">
+          <i className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 text-2xl text-white fa-solid fa-plus"></i>
+        </div>
       </div>
     </div>
   );

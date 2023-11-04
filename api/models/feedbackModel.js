@@ -8,13 +8,13 @@ const FeedbackSchema = new Schema(
       type: String,
       required: true,
     },
-    details: {
-      type: String,
-      default: "Feature",
-    },
     category: {
       type: String,
       required: true,
+    },
+    details: {
+      type: String,
+      default: "Feature",
     },
     totalUpvotes: {
       type: Number,

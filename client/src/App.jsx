@@ -31,14 +31,21 @@ function App() {
   }, []);
 
   async function handleAddFeedback(feedback) {
-    const res = await fetch(`${BASE_API}/feedback/add`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(feedback),
-    });
-    const data = await res.json();
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${BASE_API}/feedback/add`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(feedback),
+      });
+      const data = await res.json();
 
-    setFeedbacks((feedbacks) => [...feedbacks, data.feedback]);
+      setFeedbacks((feedbacks) => [...feedbacks, data.feedback]);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -50,7 +57,12 @@ function App() {
         />
         <Route
           path="/feedback/add"
-          element={<FeedbackAdd handleAddFeedback={handleAddFeedback} />}
+          element={
+            <FeedbackAdd
+              handleAddFeedback={handleAddFeedback}
+              isLoading={isLoading}
+            />
+          }
         />
         <Route
           path="*"
