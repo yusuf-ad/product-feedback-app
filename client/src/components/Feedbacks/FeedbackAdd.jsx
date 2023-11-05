@@ -9,17 +9,23 @@ import { useFeedbacks } from "../../contexts/FeedbacksContext";
 import { useNewFeedback } from "../../contexts/NewFeedbackContext";
 
 export function FeedbackAdd() {
-  const { handleSubmit } = useNewFeedback();
+  const { handleSubmit, dispatch } = useNewFeedback();
 
   const { isLoading } = useFeedbacks();
 
   const navigate = useNavigate();
 
+  function handleReturnBack() {
+    navigate("/");
+
+    dispatch({ type: "reset" });
+  }
+
   if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="container mx-auto max-w-2xl  ">
-      <button onClick={handleSubmit} className="flex items-center group">
+      <button onClick={handleReturnBack} className="flex items-center group">
         <span>
           <i className="text-blue-default  text-xs mr-4 fa-solid fa-chevron-left"></i>
         </span>
@@ -40,7 +46,7 @@ export function FeedbackAdd() {
 
           <div className="flex gap-4 justify-end mt-12">
             <button
-              onClick={() => navigate("/")}
+              onClick={handleReturnBack}
               className="btn bg-grey-darkest hover:bg-grey-darker-hover"
             >
               Cancel

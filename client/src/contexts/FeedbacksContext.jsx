@@ -17,8 +17,6 @@ function FeedbacksProvider({ children }) {
         const res = await fetch(`${BASE_API}/feedbacks`);
         const { data } = await res.json();
 
-        console.log(data.feedbacks);
-
         setFeedbacks(data.feedbacks);
       } catch (err) {
         console.log(err.message);

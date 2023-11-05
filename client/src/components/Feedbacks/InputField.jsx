@@ -2,14 +2,14 @@ import { useNewFeedback } from "../../contexts/NewFeedbackContext";
 import Error from "../UI/Error";
 
 function InputField() {
-  const { titleInput, title, dispatch, errorMsg } = useNewFeedback();
+  const { titleInput, title, dispatch, titleError: error } = useNewFeedback();
 
   function handleChange(e) {
     dispatch({ type: "changeTitle", payload: e.target.value });
 
     if (!e.target.value.trim())
-      dispatch({ type: "error", payload: "Can't be empty" });
-    else dispatch({ type: "error", payload: "" });
+      dispatch({ type: "titleError", payload: "Can't be empty" });
+    else dispatch({ type: "titleError", payload: "" });
   }
 
   return (
@@ -23,14 +23,14 @@ function InputField() {
         value={title}
         onChange={handleChange}
         className={`shadow-sm mt-5 bg-grey-light px-6 h-14 rounded-md w-full ${
-          errorMsg
+          error
             ? "outline-red-default/70 text-red-default"
             : "outline-purple-default/50"
         }`}
         id="title"
         type="text"
       />
-      {errorMsg && <Error message="Can't be empty" />}
+      {error && <Error message="Can't be empty" />}
     </div>
   );
 }

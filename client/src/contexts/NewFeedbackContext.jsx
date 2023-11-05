@@ -7,7 +7,8 @@ const initialState = {
   title: "",
   details: "",
   category: "feature",
-  errorMsg: "",
+  titleError: "",
+  detailsError: "",
 };
 
 function reducer(state, action) {
@@ -21,8 +22,11 @@ function reducer(state, action) {
     case "changeCategory":
       return { ...state, category: action.payload };
 
-    case "error":
-      return { ...state, errorMsg: action.payload };
+    case "titleError":
+      return { ...state, titleError: action.payload };
+
+    case "detailsError":
+      return { ...state, detailsError: action.payload };
 
     case "reset":
       return initialState;
@@ -33,10 +37,8 @@ function reducer(state, action) {
 }
 
 function NewFeedbackProvider({ children }) {
-  const [{ title, details, category, errorMsg }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [{ title, details, category, titleError, detailsError }, dispatch] =
+    useReducer(reducer, initialState);
 
   const { handleAddFeedback } = useFeedbacks();
 
@@ -48,12 +50,12 @@ function NewFeedbackProvider({ children }) {
 
     if (!title.trim()) {
       titleInput.current.focus();
-      return dispatch({ type: "error", payload: "Can't be empty." });
+      return dispatch({ type: "titleError", payload: "Can't be empty." });
     }
 
     if (!details.trim()) {
       detailsInput.current.focus();
-      return dispatch({ type: "error", payload: "Can't be empty." });
+      return dispatch({ type: "detailsError", payload: "Can't be empty." });
     }
 
     const newFeedback = {
@@ -76,7 +78,8 @@ function NewFeedbackProvider({ children }) {
         title,
         details,
         category,
-        errorMsg,
+        titleError,
+        detailsError,
         dispatch,
         handleSubmit,
         titleInput,
