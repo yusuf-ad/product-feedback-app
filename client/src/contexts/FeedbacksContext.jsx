@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-const BASE_API = "http://localhost:3100";
+const BASE_API = "http://localhost:3100/api/v1/feedbacks";
 
 // 1) create context
 const FeedbacksContext = createContext();
@@ -14,12 +14,12 @@ function FeedbacksProvider({ children }) {
     async function getFeedbacks() {
       setIsLoading(true);
       try {
-        const res = await fetch(`${BASE_API}/feedbacks`);
+        const res = await fetch(`${BASE_API}`);
         const { data } = await res.json();
 
         setFeedbacks(data.feedbacks);
       } catch (err) {
-        console.log(err.message);
+        console.log("ERR 🔥", err.message);
       } finally {
         setIsLoading(false);
       }
@@ -31,7 +31,7 @@ function FeedbacksProvider({ children }) {
   async function handleAddFeedback(feedback) {
     setIsLoading(true);
     try {
-      const res = await fetch(`${BASE_API}/feedback/add`, {
+      const res = await fetch(`${BASE_API}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(feedback),
