@@ -24,6 +24,14 @@ const FeedbackSchema = new Schema(
       type: Number,
       default: 0,
     },
+    comments: {
+      comment: {
+        fullName: { type: String },
+        username: { type: String },
+        comment: { type: String },
+        userImg: { type: String },
+      },
+    },
   },
   { timestamps: true }
 );

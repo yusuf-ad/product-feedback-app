@@ -7,6 +7,7 @@ const FeedbacksContext = createContext();
 
 // 2) create provider
 function FeedbacksProvider({ children }) {
+  const [currentFeedback, setCurrentFeedback] = useState({});
   const [feedbacks, setFeedbacks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,7 +39,23 @@ function FeedbacksProvider({ children }) {
       });
       const data = await res.json();
 
+      console.log(data);
+
       setFeedbacks((feedbacks) => [...feedbacks, data.feedback]);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function handleGetFeedback(id) {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${BASE_API}/${id}`);
+      const { data } = await res.json();
+
+      setCurrentFeedback(data.feedback);
     } catch (err) {
       console.error(err);
     } finally {
@@ -49,8 +66,10 @@ function FeedbacksProvider({ children }) {
   return (
     <FeedbacksContext.Provider
       value={{
+        currentFeedback,
         feedbacks,
         handleAddFeedback,
+        handleGetFeedback,
         isLoading,
       }}
     >

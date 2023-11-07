@@ -16,9 +16,9 @@ export function FeedbackAdd() {
   const navigate = useNavigate();
 
   function handleReturnBack() {
-    navigate("/");
-
     dispatch({ type: "reset" });
+
+    navigate("/");
   }
 
   if (isLoading) return <LoadingSpinner />;

@@ -7,6 +7,7 @@ import { FeedbacksProvider } from "./contexts/FeedbacksContext";
 import { NewFeedbackProvider } from "./contexts/NewFeedbackContext";
 
 import PageNotFound from "./components/pages/PageNotFound";
+import FeedbackDetails from "./components/pages/FeedbackDetails";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route index element={<AppLayout />} />
             <Route path="/feedback/add" element={<FeedbackAdd />} />
+            <Route path="/feedback/detail/:id" element={<FeedbackDetails />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
