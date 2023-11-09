@@ -4,12 +4,15 @@ import { useFeedbacks } from "../../contexts/FeedbacksContext";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
 
+import TextAreaField from "../Feedbacks/TextAreaField";
+
 function FeedbackDetails() {
   const navigate = useNavigate();
 
   const { id: feedbackId } = useParams();
 
-  const { isLoading, currentFeedback, handleGetFeedback } = useFeedbacks();
+  const { isLoading, currentFeedback, handleGetFeedback, comments } =
+    useFeedbacks();
 
   useEffect(() => {
     handleGetFeedback(feedbackId);
@@ -41,30 +44,58 @@ function FeedbackDetails() {
 
       <section>
         <div className="bg-white p-6 rounded-xl mt-8 shadow-sm">
-          <h2 className="text-xl">0 Comments</h2>
+          <h2 className="text-xl">{currentFeedback.totalComments} Comments</h2>
 
-          <div className="mt-8  flex items-center gap-6 pb-8 pt-3 border-b last:border-0  ">
-            <div className="w-14 h-14 bg-red-400 rounded-full">
-              <img src="" alt="" />
-            </div>
+          {comments.map((comment) => (
+            <Comment key={comment._id} comment={comment} />
+          ))}
+        </div>
+      </section>
 
-            <div>
-              <h3 className="text-lg">name</h3>
-              <p className="text-gray-600">@username</p>
-              <p className="text-grey-darkest mt-4">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo,
-                nihil aperiam! Nesciunt?
-              </p>
-            </div>
+      <div className="bg-white p-6 rounded-xl mt-8 shadow-sm">
+        <h2 className="text-xl mb-4">Add Comment</h2>
 
-            <button className="ml-auto font-bold text-blue-default hover:underline duration-300">
-              Reply
+        <div>
+          <textarea
+            className={`shadow-sm mt-5 bg-grey-light h-28 px-6 py-4 rounded-md w-full outline-purple-default/50 resize-none `}
+            name="feedback-detail"
+            id="detail"
+            maxLength={255}
+          ></textarea>
+
+          <div className="flex justify-between items-center mt-10">
+            <p>255 characters left</p>
+
+            <button className="btn bg-purple-default hover:bg-purple-hover">
+              Post Comment
             </button>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
 
 export default FeedbackDetails;
+
+function Comment({ comment }) {
+  console.log(comment);
+
+  return (
+    <div className="mt-8  flex items-center gap-6 pb-8 pt-3 border-b last:border-0  ">
+      <div className="w-20 h-20 rounded-full ">
+        <img className="rounded-full" src={comment.userImg} alt="user" />
+      </div>
+
+      <div>
+        <h3 className="text-lg">{comment.fullName}</h3>
+        <p className="text-gray-600">@{comment.username}</p>
+        <p className="text-grey-darkest mt-4">{comment.comment}</p>
+      </div>
+
+      <button className="ml-auto font-bold text-blue-default hover:underline duration-300">
+        Reply
+      </button>
+    </div>
+  );
+}

@@ -22,9 +22,9 @@ export function Feedback({ feedback }) {
           </p>
         </div>
       </Link>
-      <p className="ml-auto font-bold">
+      <p className="ml-auto font-bold flex">
         <span>
-          <i className="text-gray-400 mr-1 fa-regular fa-comment"></i>
+          <i className="text-gray-400 mr-2 fa-regular fa-comment"></i>
         </span>
         {feedback.totalComments}
       </p>

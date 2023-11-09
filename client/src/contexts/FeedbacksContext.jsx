@@ -8,6 +8,8 @@ const FeedbacksContext = createContext();
 // 2) create provider
 function FeedbacksProvider({ children }) {
   const [currentFeedback, setCurrentFeedback] = useState({});
+  const [comments, setComments] = useState([]);
+
   const [feedbacks, setFeedbacks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -56,6 +58,7 @@ function FeedbacksProvider({ children }) {
       const { data } = await res.json();
 
       setCurrentFeedback(data.feedback);
+      setComments(data.feedback.comments);
     } catch (err) {
       console.error(err);
     } finally {
@@ -67,6 +70,7 @@ function FeedbacksProvider({ children }) {
     <FeedbacksContext.Provider
       value={{
         currentFeedback,
+        comments,
         feedbacks,
         handleAddFeedback,
         handleGetFeedback,
