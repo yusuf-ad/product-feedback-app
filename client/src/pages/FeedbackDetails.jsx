@@ -1,10 +1,10 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { Feedback } from "../Feedbacks/Feedback";
-import { useFeedbacks } from "../../contexts/FeedbacksContext";
+import { Feedback } from "../components/Feedbacks/Feedback";
+import { useFeedbacks } from "../contexts/FeedbacksContext";
 import { useEffect, useState } from "react";
-import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../components/UI/LoadingSpinner/LoadingSpinner";
 
-import TextAreaField from "../Feedbacks/TextAreaField";
+import TextAreaField from "../components/Feedbacks/TextAreaField";
 
 function FeedbackDetails() {
   const navigate = useNavigate();

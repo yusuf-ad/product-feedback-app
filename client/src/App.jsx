@@ -6,8 +6,8 @@ import { FeedbackAdd } from "./components/Feedbacks/FeedbackAdd";
 import { FeedbacksProvider } from "./contexts/FeedbacksContext";
 import { NewFeedbackProvider } from "./contexts/NewFeedbackContext";
 
-import PageNotFound from "./components/pages/PageNotFound";
-import FeedbackDetails from "./components/pages/FeedbackDetails";
+import PageNotFound from "./pages/PageNotFound";
+import FeedbackDetails from "./pages/FeedbackDetails";
 
 function App() {
   return (

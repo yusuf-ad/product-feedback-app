@@ -94,27 +94,3 @@ exports.deleteFeedback = async (req, res) => {
     });
   }
 };
-
-exports.createComment = async (req, res) => {
-  try {
-    const newComment = req.body;
-
-    const feedback = await Feedback.findByIdAndUpdate(
-      req.params.id,
-      { $push: { comments: newComment }, $inc: { totalComments: 1 } }, // $inc is used to increment totalComments by 1
-      { new: true } // Set new: true to return the updated feedback document
-    );
-
-    res.status(200).json({
-      status: "success",
-      data: {
-        feedback,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};

@@ -1,0 +1,70 @@
+const Feedback = require("../models/feedbackModel");
+
+exports.createComment = async (req, res) => {
+  try {
+    const newComment = req.body;
+
+    const feedback = await Feedback.findByIdAndUpdate(
+      req.params.id,
+      { $push: { comments: newComment }, $inc: { totalComments: 1 } }, // $inc is used to increment totalComments by 1
+      { new: true } // Set new: true to return the updated feedback document
+    );
+
+    res.status(200).json({
+      status: "success",
+      length: feedback.comments.length,
+      data: {
+        comments: feedback.comments,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
+exports.getAllComments = async (req, res) => {
+  try {
+    const feedback = await Feedback.findById(req.params.id);
+
+    res.status(200).json({
+      status: "success",
+      length: feedback.comments.length,
+      data: {
+        comments: feedback.comments,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
+exports.deleteAllComments = async (req, res) => {
+  try {
+    const feedback = await Feedback.findByIdAndUpdate(
+      req.params.id,
+      {
+        comments: [],
+        totalComments: 0,
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        feedback,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};

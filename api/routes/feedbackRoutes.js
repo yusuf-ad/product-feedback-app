@@ -11,7 +11,6 @@ router
 router
   .route("/:id")
   .get(feedbackController.getFeedback)
-  .put(feedbackController.createComment)
   .patch(feedbackController.updateFeedback)
   .delete(feedbackController.deleteFeedback);
 
