@@ -13,6 +13,6 @@ app.use(cors());
 // ! WHERE OUR ROUTER MOUNTS
 // ! They are simply middleware functions that only apply for a certain URL.
 app.use("/api/v1/feedbacks", feedbackRouter);
-app.use("/api/v1/feedbacks/comment", commentRouter);
+app.use("/api/v1/comments", commentRouter);
 
 module.exports = app;

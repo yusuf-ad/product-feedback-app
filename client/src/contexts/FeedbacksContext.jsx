@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 const BASE_API = "http://localhost:3100/api/v1/feedbacks";
 
@@ -51,7 +57,7 @@ function FeedbacksProvider({ children }) {
     }
   }
 
-  async function handleGetFeedback(id) {
+  const handleGetFeedback = useCallback(async function (id) {
     setIsLoading(true);
     try {
       const res = await fetch(`${BASE_API}/${id}`);
@@ -64,7 +70,7 @@ function FeedbacksProvider({ children }) {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, []);
 
   return (
     <FeedbacksContext.Provider

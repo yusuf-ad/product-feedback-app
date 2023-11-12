@@ -1,22 +1,26 @@
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Feedback } from "../components/Feedbacks/Feedback";
 import { useFeedbacks } from "../contexts/FeedbacksContext";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import LoadingSpinner from "../components/UI/LoadingSpinner/LoadingSpinner";
-
-import TextAreaField from "../components/Feedbacks/TextAreaField";
+import { useComments } from "../contexts/CommentsContext";
 
 function FeedbackDetails() {
   const navigate = useNavigate();
 
   const { id: feedbackId } = useParams();
 
-  const { isLoading, currentFeedback, handleGetFeedback, comments } =
-    useFeedbacks();
+  const { isLoading, currentFeedback, handleGetFeedback } = useFeedbacks();
+
+  const { commentsLoading, setCommentsLoading, getComments, comments } =
+    useComments();
 
   useEffect(() => {
+    setCommentsLoading(true);
+
     handleGetFeedback(feedbackId);
-  }, [feedbackId]);
+    getComments(feedbackId);
+  }, [feedbackId, handleGetFeedback, getComments, setCommentsLoading]);
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -43,13 +47,19 @@ function FeedbackDetails() {
       <Feedback feedback={currentFeedback} />
 
       <section>
-        <div className="bg-white p-6 rounded-xl mt-8 shadow-sm">
-          <h2 className="text-xl">{currentFeedback.totalComments} Comments</h2>
+        {commentsLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <div className="bg-white p-6 rounded-xl mt-8 shadow-sm">
+            <h2 className="text-xl">
+              {currentFeedback.totalComments} Comments
+            </h2>
 
-          {comments.map((comment) => (
-            <Comment key={comment._id} comment={comment} />
-          ))}
-        </div>
+            {comments.map((comment) => (
+              <Comment key={comment._id} comment={comment} />
+            ))}
+          </div>
+        )}
       </section>
 
       <div className="bg-white p-6 rounded-xl mt-8 shadow-sm">
@@ -75,12 +85,11 @@ function FeedbackDetails() {
     </div>
   );
 }
+23;
 
 export default FeedbackDetails;
 
 function Comment({ comment }) {
-  console.log(comment);
-
   return (
     <div className="mt-8  flex items-center gap-6 pb-8 pt-3 border-b last:border-0  ">
       <div className="w-20 h-20 rounded-full ">
