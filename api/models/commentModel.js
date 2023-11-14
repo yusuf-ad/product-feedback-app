@@ -4,12 +4,15 @@ const { Schema } = mongoose;
 
 const commentSchema = new Schema({
   fullName: { type: String, default: "yusuf ad" },
-  username: { type: String, default: "YUSUFAD27", lowercase: true },
+  username: {
+    type: String,
+    default: "YUSUFAD27",
+    lowercase: true,
+  },
   comment: {
     required: [true, "please enter write a comment"],
     type: String,
-    default:
-      "Much easier to get answers from devs who can relate, since they've either finished the challenge themselves or are in the middle of it.",
+    minlength: [8, "Comment should be at least 8 characters long"],
   },
   userImg: {
     type: String,
@@ -17,5 +20,7 @@ const commentSchema = new Schema({
       "https://lm-product-feedback-app.netlify.app/assets/user-images/image-george.jpg",
   },
 });
+
+const Comment = mongoose.model("comments", commentSchema);
 
 module.exports = commentSchema;

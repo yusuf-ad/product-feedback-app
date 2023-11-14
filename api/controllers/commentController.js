@@ -2,7 +2,12 @@ const Feedback = require("../models/feedbackModel");
 
 exports.createComment = async (req, res) => {
   try {
-    const newComment = req.body;
+    const newComment = {
+      fullName: req.body.fullName,
+      username: req.body.username,
+      comment: req.body.comment,
+      userImg: req.body.userImg,
+    };
 
     const feedback = await Feedback.findByIdAndUpdate(
       req.params.id,

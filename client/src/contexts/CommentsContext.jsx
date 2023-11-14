@@ -1,13 +1,6 @@
 import { useParams } from "react-router-dom";
 
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
-import { useFeedbacks } from "./FeedbacksContext";
+import { createContext, useContext, useState, useCallback } from "react";
 
 const BASE_URL = "http://localhost:3100/api/v1/comments";
 
