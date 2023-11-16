@@ -12,7 +12,7 @@ const commentSchema = new Schema({
   comment: {
     required: [true, "please enter write a comment"],
     type: String,
-    minlength: [8, "Comment should be at least 8 characters long"],
+    maxlength: [255, "max length should be 255 characters"],
   },
   userImg: {
     type: String,
@@ -23,4 +23,4 @@ const commentSchema = new Schema({
 
 const Comment = mongoose.model("comments", commentSchema);
 
-module.exports = commentSchema;
+module.exports = { commentSchema, Comment };

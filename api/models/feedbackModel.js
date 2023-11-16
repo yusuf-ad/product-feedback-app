@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const commentSchema = require("./commentModel");
+const { commentSchema } = require("./commentModel");
 
 const { Schema } = mongoose;
 
@@ -25,7 +25,7 @@ const feedbackSchema = new Schema(
       type: Number,
       default: 0,
     },
-    comments: [commentSchema],
+    comments: [commentSchema], // Defining the comments field as an array of commentSchema objects
   },
   { timestamps: true }
 );
