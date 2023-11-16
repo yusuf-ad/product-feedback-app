@@ -20,9 +20,8 @@ exports.createComment = async (req, res) => {
 
     res.status(200).json({
       status: "success",
-      length: feedback.comments.length,
       data: {
-        comments: feedback.comments,
+        comment,
       },
     });
   } catch (err) {

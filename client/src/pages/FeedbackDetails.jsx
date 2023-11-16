@@ -1,27 +1,34 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Feedback } from "../components/Feedbacks/Feedback";
 import { useFeedbacks } from "../contexts/FeedbacksContext";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import LoadingSpinner from "../components/UI/LoadingSpinner/LoadingSpinner";
 import { useComments } from "../contexts/CommentsContext";
 import { Comment } from "../components/Comments/Comment";
 
+import Error from "../components/UI/Error";
+
 function FeedbackDetails() {
   const navigate = useNavigate();
-
   const { id: feedbackId } = useParams();
-
   const { isLoading, currentFeedback, handleGetFeedback } = useFeedbacks();
+  const {
+    newComment,
+    setNewComment,
+    createComment,
+    commentsLoading,
+    getComments,
+    comments,
+    error,
+    setError,
+  } = useComments();
 
-  const { commentsLoading, setCommentsLoading, getComments, comments } =
-    useComments();
+  const textArea = useRef(null);
 
   useEffect(() => {
-    setCommentsLoading(true);
-
     handleGetFeedback(feedbackId);
     getComments(feedbackId);
-  }, [feedbackId, handleGetFeedback, getComments, setCommentsLoading]);
+  }, [feedbackId, handleGetFeedback, getComments]);
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -66,22 +73,47 @@ function FeedbackDetails() {
       <div className="bg-white p-6 rounded-xl mt-8 shadow-sm">
         <h2 className="text-xl mb-4">Add Comment</h2>
 
-        <div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+
+            if (!newComment.trim()) {
+              textArea.current.focus();
+              return setError("This can't be empty");
+            }
+
+            createComment(feedbackId);
+            setNewComment("");
+          }}
+        >
           <textarea
-            className={`shadow-sm mt-5 bg-grey-light h-28 px-6 py-4 rounded-md w-full outline-purple-default/50 resize-none `}
+            ref={textArea}
+            value={newComment}
+            onChange={(e) => {
+              setNewComment(e.target.value);
+
+              if (e.target.value.trim()) setError("");
+            }}
+            className={`shadow-sm mt-5 bg-grey-light h-28 px-6 py-4 rounded-md w-full resize-none ${
+              error
+                ? "outline-red-default/70 text-red-default"
+                : "outline-purple-default/50"
+            }`}
             name="feedback-detail"
             id="detail"
             maxLength={255}
           ></textarea>
 
+          {error && <Error message={error} />}
+
           <div className="flex justify-between items-center mt-10">
-            <p>255 characters left</p>
+            <p>{255 - newComment.trim().length} characters left</p>
 
             <button className="btn bg-purple-default hover:bg-purple-hover">
               Post Comment
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

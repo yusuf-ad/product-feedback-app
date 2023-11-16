@@ -2,15 +2,22 @@ import { useParams } from "react-router-dom";
 
 import { createContext, useContext, useState, useCallback } from "react";
 
+import { faker } from "@faker-js/faker";
+
 const BASE_URL = "http://localhost:3100/api/v1/comments";
 
 const CommentsContext = createContext({
   comments: [],
   commentsLoading: false,
+  getComments: () => {},
+  createComment: () => {},
 });
 
 function CommentsProvider({ children }) {
   const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+
+  const [error, setError] = useState("");
   const [commentsLoading, setCommentsLoading] = useState(true);
 
   const getComments = useCallback(async function (id) {
@@ -27,13 +34,39 @@ function CommentsProvider({ children }) {
     }
   }, []);
 
+  async function createComment(id) {
+    setCommentsLoading(true);
+    try {
+      const res = await fetch(`${BASE_URL}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: faker.person.fullName(),
+          username: undefined,
+          comment: newComment,
+        }),
+      });
+      const { data } = await res.json();
+
+      setComments((comments) => [...comments, data.comment]);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setCommentsLoading(false);
+    }
+  }
+
   return (
     <CommentsContext.Provider
       value={{
         getComments,
         comments,
         commentsLoading,
-        setCommentsLoading,
+        createComment,
+        newComment,
+        setNewComment,
+        error,
+        setError,
       }}
     >
       {children}
