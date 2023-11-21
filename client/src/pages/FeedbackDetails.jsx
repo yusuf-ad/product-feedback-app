@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Feedback } from "../components/Feedbacks/Feedback";
 import { useFeedbacks } from "../contexts/FeedbacksContext";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import LoadingSpinner from "../components/UI/LoadingSpinner/LoadingSpinner";
 import { useComments } from "../contexts/CommentsContext";
 import { Comment } from "../components/Comments/Comment";
@@ -28,7 +28,19 @@ function FeedbackDetails() {
   useEffect(() => {
     handleGetFeedback(feedbackId);
     getComments(feedbackId);
-  }, [feedbackId, handleGetFeedback, getComments]);
+  }, [feedbackId, handleGetFeedback, getComments, comments.length]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!newComment.trim()) {
+      textArea.current.focus();
+      return setError("This can't be empty");
+    }
+
+    createComment(feedbackId);
+    setNewComment("");
+  }
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -59,9 +71,7 @@ function FeedbackDetails() {
           <LoadingSpinner />
         ) : (
           <div className="bg-white p-6 rounded-xl mt-8 shadow-sm">
-            <h2 className="text-xl">
-              {currentFeedback.totalComments} Comments
-            </h2>
+            <h2 className="text-xl">{comments.length} Comments</h2>
 
             {comments.map((comment) => (
               <Comment key={comment._id} comment={comment} />
@@ -73,19 +83,7 @@ function FeedbackDetails() {
       <div className="bg-white p-6 rounded-xl mt-8 shadow-sm">
         <h2 className="text-xl mb-4">Add Comment</h2>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-
-            if (!newComment.trim()) {
-              textArea.current.focus();
-              return setError("This can't be empty");
-            }
-
-            createComment(feedbackId);
-            setNewComment("");
-          }}
-        >
+        <form onSubmit={handleSubmit}>
           <textarea
             ref={textArea}
             value={newComment}

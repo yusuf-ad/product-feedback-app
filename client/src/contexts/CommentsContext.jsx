@@ -44,6 +44,7 @@ function CommentsProvider({ children }) {
           fullName: faker.person.fullName(),
           username: undefined,
           comment: newComment,
+          userImg: faker.image.avatar(),
         }),
       });
       const { data } = await res.json();

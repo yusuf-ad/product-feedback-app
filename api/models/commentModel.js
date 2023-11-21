@@ -16,8 +16,6 @@ const commentSchema = new Schema({
   },
   userImg: {
     type: String,
-    default:
-      "https://lm-product-feedback-app.netlify.app/assets/user-images/image-george.jpg",
   },
 });
 

@@ -8,6 +8,7 @@ import Section from "../Layout/Section";
 import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
 import { Feedback } from "../Feedbacks/Feedback";
 import { useFeedbacks } from "../../contexts/FeedbacksContext";
+import { useEffect } from "react";
 
 function AppLayout() {
   const { feedbacks, isLoading } = useFeedbacks();
