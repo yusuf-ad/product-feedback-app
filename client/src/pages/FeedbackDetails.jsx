@@ -92,7 +92,7 @@ function FeedbackDetails() {
 
               if (e.target.value.trim()) setError("");
             }}
-            className={`shadow-sm mt-5 bg-grey-light h-28 px-6 py-4 rounded-md w-full resize-none ${
+            className={`shadow-sm mt-5 bg-grey-light h-36 px-6 py-4 rounded-md w-full resize-none ${
               error
                 ? "outline-red-default/70 text-red-default"
                 : "outline-purple-default/50"
