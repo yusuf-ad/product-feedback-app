@@ -1,4 +1,5 @@
-const Comment = require("../models/commentModel");
+const { Comment } = require("../models/commentModel");
+const { Reply } = require("../models/replyModel");
 
 exports.createReply = async (req, res) => {
   try {
@@ -9,11 +10,18 @@ exports.createReply = async (req, res) => {
       userImg: req.body.userImg,
     };
 
+    const reply = await Reply.create(newReply);
+
     const comment = await Comment.findByIdAndUpdate(
       req.params.id,
-      { $push: { replies: newReply } },
+      { $push: { replies: reply } },
       { new: true } // Set new: true to return the updated feedback document
     );
+
+    if (!comment)
+      return res.status(404).json({
+        message: "Comment can not be found!",
+      });
 
     res.status(200).json({
       status: "success",
@@ -24,6 +32,7 @@ exports.createReply = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       status: "failed to create reply",
+      error: err.message,
     });
   }
 };
