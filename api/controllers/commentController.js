@@ -12,7 +12,7 @@ exports.createComment = async (req, res) => {
 
     const comment = await Comment.create(newComment);
 
-    const feedback = await Feedback.findByIdAndUpdate(
+    await Feedback.findByIdAndUpdate(
       req.params.id,
       { $push: { comments: comment }, $inc: { totalComments: 1 } }, // $inc is used to increment totalComments by 1
       { new: true } // Set new: true to return the updated feedback document

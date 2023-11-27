@@ -1,17 +1,15 @@
-const { replySchema } = require("./replyModel");
-
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const commentSchema = new Schema({
+const replySchema = new Schema({
   fullName: { type: String, default: "yusuf ad" },
   username: {
     type: String,
     lowercase: true,
   },
-  comment: {
-    required: [true, "please enter write a comment"],
+  reply: {
+    required: [true, "please enter write a reply"],
     type: String,
     maxlength: [255, "max length should be 255 characters"],
     trim: true,
@@ -19,10 +17,9 @@ const commentSchema = new Schema({
   userImg: {
     type: String,
   },
-  replies: [replySchema],
 });
 
-commentSchema.pre("save", function (next) {
+replySchema.pre("save", function (next) {
   // arrow functions doesnt have this keyword
   console.log(this);
 
@@ -31,6 +28,6 @@ commentSchema.pre("save", function (next) {
   next();
 });
 
-const Comment = mongoose.model("comments", commentSchema);
+const Reply = mongoose.model("reply", replySchema);
 
-module.exports = { commentSchema, Comment };
+module.exports = { Reply, replySchema };
