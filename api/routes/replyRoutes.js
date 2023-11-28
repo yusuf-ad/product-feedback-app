@@ -5,6 +5,7 @@ const router = express.Router();
 router
   .route("/:id")
   .get(replyController.getAllReplies)
-  .post(replyController.createReply);
+  .post(replyController.createReply)
+  .delete(replyController.deleteAllReplies);
 
 module.exports = router;

@@ -6,7 +6,7 @@ exports.createReply = async (req, res) => {
     const newReply = {
       fullName: req.body.fullName,
       username: req.body.username,
-      reply: req.body.reply,
+      comment: req.body.comment,
       userImg: req.body.userImg,
     };
 
@@ -51,6 +51,30 @@ exports.getAllReplies = async (req, res) => {
     res.status(404).json({
       status: "not found",
       message: err.message,
+    });
+  }
+};
+
+exports.deleteAllReplies = async (req, res) => {
+  try {
+    const comment = await Comment.findByIdAndUpdate(
+      req.params.id,
+      {
+        replies: [],
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        comment,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
     });
   }
 };

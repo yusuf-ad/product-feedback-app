@@ -30,15 +30,6 @@ const feedbackSchema = new Schema(
   { timestamps: true }
 );
 
-feedbackSchema.pre("save", function (next) {
-  // arrow functions doesnt have this keyword
-  console.log(this);
-
-  this.totalComments = this.comments.length;
-
-  next();
-});
-
 const Feedback = mongoose.model("Feedback", feedbackSchema);
 
 module.exports = Feedback;
