@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-const BASE_API = "http://localhost:3100/api/v1/feedbacks";
+import BASE_URL from "../utils/BASE_URL";
 
 // 1) create context
 const FeedbacksContext = createContext();
@@ -22,7 +22,7 @@ function FeedbacksProvider({ children }) {
     async function getFeedbacks() {
       setIsLoading(true);
       try {
-        const res = await fetch(`${BASE_API}`);
+        const res = await fetch(`${BASE_URL}/feedbacks`);
         const { data } = await res.json();
 
         console.log(data);
@@ -40,7 +40,7 @@ function FeedbacksProvider({ children }) {
   async function handleAddFeedback(feedback) {
     setIsLoading(true);
     try {
-      const res = await fetch(`${BASE_API}`, {
+      const res = await fetch(`${BASE_URL}/feedbacks`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(feedback),
@@ -60,7 +60,7 @@ function FeedbacksProvider({ children }) {
   const handleGetFeedback = useCallback(async function (id) {
     setIsLoading(true);
     try {
-      const res = await fetch(`${BASE_API}/${id}`);
+      const res = await fetch(`${BASE_URL}/feedbacks/${id}`);
       const { data } = await res.json();
 
       setCurrentFeedback(data.feedback);

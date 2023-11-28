@@ -8,8 +8,8 @@ const replySchema = new Schema({
     type: String,
     lowercase: true,
   },
-  reply: {
-    required: [true, "please enter write a reply"],
+  comment: {
+    required: [true, "please write a comment"],
     type: String,
     maxlength: [255, "max length should be 255 characters"],
     trim: true,

@@ -1,10 +1,8 @@
-import { useParams } from "react-router-dom";
-
 import { createContext, useContext, useState, useCallback } from "react";
 
 import { faker } from "@faker-js/faker";
 
-const BASE_URL = "http://localhost:3100/api/v1/comments";
+import BASE_URL from "../utils/BASE_URL";
 
 const CommentsContext = createContext({
   comments: [],
@@ -23,7 +21,7 @@ function CommentsProvider({ children }) {
   const getComments = useCallback(async function (id) {
     setCommentsLoading(true);
     try {
-      const res = await fetch(`${BASE_URL}/${id}`);
+      const res = await fetch(`${BASE_URL}/comments/${id}`);
       const { data } = await res.json();
 
       setComments(data.comments);
@@ -37,7 +35,7 @@ function CommentsProvider({ children }) {
   async function createComment(id) {
     setCommentsLoading(true);
     try {
-      const res = await fetch(`${BASE_URL}/${id}`, {
+      const res = await fetch(`${BASE_URL}/comments/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
