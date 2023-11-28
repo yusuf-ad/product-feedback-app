@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
 
-import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 import BASE_URL from "../../utils/BASE_URL";
 
 export function Comment({ comment }) {
@@ -21,19 +20,24 @@ export function Comment({ comment }) {
 
   return (
     <div className="mt-8 pb-8 pt-3 border-b last:border-0 flex gap-4 flex-col  ">
-      <User user={comment} commentId={comment._id} />
+      <User user={comment} commentId={comment._id} setReplies={setReplies} />
 
       <div className="relative w-full self-end mt-12 pl-12 flex flex-col gap-8   ">
         <div className="-top-14 left-6 h-[100%]  w-[1px] bg-gray-300/80 absolute"></div>
         {replies.map((userReply) => (
-          <User key={userReply._id} user={userReply} commentId={comment._id} />
+          <User
+            key={userReply._id}
+            user={userReply}
+            commentId={comment._id}
+            setReplies={setReplies}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-function User({ user, commentId }) {
+function User({ user, commentId, setReplies }) {
   const [reply, setReply] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -51,7 +55,7 @@ function User({ user, commentId }) {
       });
       const { data } = await res.json();
 
-      console.log(data);
+      setReplies((replies) => [...replies, data.reply]);
     } catch (err) {
       console.log(err);
     }

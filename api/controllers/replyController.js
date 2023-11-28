@@ -26,7 +26,7 @@ exports.createReply = async (req, res) => {
     res.status(200).json({
       status: "success",
       data: {
-        comment,
+        reply,
       },
     });
   } catch (err) {
