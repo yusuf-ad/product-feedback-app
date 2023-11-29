@@ -22,6 +22,7 @@ export function User({ user, commentId, setReplies }) {
       const { data } = await res.json();
 
       setReplies((replies) => [...replies, data.reply]);
+      setIsOpen(false);
     } catch (err) {
       console.log(err);
     }
@@ -59,6 +60,7 @@ export function User({ user, commentId, setReplies }) {
           reply={reply}
           setReply={setReply}
           createReply={createReply}
+          setIsOpen={setIsOpen}
         />
       )}
     </>
