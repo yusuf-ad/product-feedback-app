@@ -3,9 +3,31 @@ import { faker } from "@faker-js/faker";
 import BASE_URL from "../../utils/BASE_URL";
 import { ReplyPost } from "./ReplyPost";
 
+const parseText = (text, color) => {
+  const parts = text.split(" ");
+  return parts.map((part, index) => {
+    if (part.startsWith("@")) {
+      return (
+        <span key={index} className={`${color} font-bold`}>
+          {" "}
+          {part}
+        </span>
+      );
+    }
+    return (
+      <span key={index} style={{ color: "black" }}>
+        {" "}
+        {part}
+      </span>
+    );
+  });
+};
+
 export function User({ user, commentId, setReplies }) {
   const [reply, setReply] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
+  console.log(user);
 
   async function createReply() {
     try {
@@ -51,12 +73,16 @@ export function User({ user, commentId, setReplies }) {
               Reply
             </button>
           </header>
-          <p className="text-grey-darkest mt-6">{user.comment}</p>
+          <p className="text-grey-darkest mt-6">
+            <span className="text-purple-default font-bold "></span>
+            {parseText(user.comment, "text-purple-default")}
+          </p>
         </div>
       </div>
 
       {isOpen && (
         <ReplyPost
+          username={user.username}
           reply={reply}
           setReply={setReply}
           createReply={createReply}

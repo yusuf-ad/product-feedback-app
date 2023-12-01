@@ -2,13 +2,15 @@ import { useEffect, useRef, useState } from "react";
 
 import Error from "./Error";
 
-export function ReplyPost({ reply, setReply, createReply }) {
+export function ReplyPost({ reply, setReply, createReply, username }) {
   const [errorMsg, setErrorMsg] = useState("");
 
   const textArea = useRef(null);
 
   useEffect(() => {
     textArea.current.focus();
+
+    textArea.current.value = `@${username} `;
   }, []);
 
   return (
@@ -23,14 +25,23 @@ export function ReplyPost({ reply, setReply, createReply }) {
             setReply(e.target.value);
             setErrorMsg("");
           }}
-          className={`shadow-sm bg-grey-light h-32 px-6 py-4 rounded-md w-full resize-none`}
+          className={`shadow-sm  bg-grey-light h-32 px-6 py-4 rounded-md w-full resize-none ${
+            errorMsg
+              ? "outline-red-default/70 text-red-default"
+              : "outline-purple-default/50"
+          }`}
           name="feedback-detail"
           id="detail"
           maxLength={255}
         ></textarea>
         <button
           onClick={() => {
-            if (!reply.trim()) return setErrorMsg("Can't be empty.");
+            if (!reply.trim()) {
+              textArea.current.focus();
+              return setErrorMsg("Can't be empty.");
+            }
+
+            setReply((reply) => `${username} ${reply}`);
 
             setErrorMsg("");
             createReply();
