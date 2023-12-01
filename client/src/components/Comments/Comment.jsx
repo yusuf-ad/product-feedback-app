@@ -19,7 +19,7 @@ export function Comment({ comment }) {
   }, [comment._id]);
 
   return (
-    <div className="mt-8 pb-4 pt-3 border-b last:border-0 flex gap-4 flex-col  ">
+    <div className="mt-8 pb-0 last:pb-4 pt-2 border-b last:border-0 flex gap-4 flex-col  ">
       <User user={comment} commentId={comment._id} setReplies={setReplies} />
 
       <div className="relative w-full self-end mt-6 pl-12 flex flex-col gap-8   ">

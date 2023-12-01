@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useNewFeedback } from "../../contexts/NewFeedbackContext";
 
-const menuItems = ["Feature", "UI", "UX", "Enhancement", "Bug"];
-
-function DropdownButton() {
+function DropdownButton({
+  menuItems = ["Feature", "UI", "UX", "Enhancement", "Bug"],
+}) {
   const { dispatch } = useNewFeedback();
 
   const [active, setActive] = useState(menuItems[0]);

@@ -1,0 +1,67 @@
+import SelectionField from "../components/Feedbacks/SelectionField";
+import InputField from "../components/Feedbacks/InputField";
+import TextAreaField from "../components/Feedbacks/TextAreaField";
+import { useEffect } from "react";
+import { useFeedbacks } from "../contexts/FeedbacksContext";
+import { useNewFeedback } from "../contexts/NewFeedbackContext";
+import { useParams } from "react-router-dom";
+
+function FeedbackEdit() {
+  const { titleInput, detailsInput } = useNewFeedback();
+  const { currentFeedback: feedback, handleGetFeedback } = useFeedbacks();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    handleGetFeedback(id);
+
+    titleInput.current.value = `${feedback.title}`;
+    detailsInput.current.value = `${feedback.details}`;
+  });
+
+  return (
+    <div className="container max-w-2xl  h-60">
+      <button className="flex items-center group">
+        <span>
+          <i className="text-blue-default  text-xs mr-4 fa-solid fa-chevron-left"></i>
+        </span>
+        <span className="mt-1 font-bold text-gray-600 transition duration-300 group-hover:underline">
+          Go Back
+        </span>
+      </button>
+
+      <div className="relative bg-white px-8 py-16 mt-20 rounded-xl shadow-sm">
+        <h1 className="text-3xl">Editing 'Q&A within the challenge hubs'</h1>
+
+        <form className="mt-16 flex flex-col gap-8">
+          <InputField />
+
+          <SelectionField />
+
+          <SelectionField
+            select="Update Status"
+            selectMsg="Change feature state"
+            menuItems={["Suggestion", "Planned", "In-Progress", "Live"]}
+          />
+
+          <TextAreaField />
+
+          <div className="flex gap-4 justify-end mt-12">
+            <button className="btn bg-grey-darkest hover:bg-grey-darker-hover">
+              Cancel
+            </button>
+            <button className="btn bg-purple-default hover:bg-purple-hover">
+              Add Feedback
+            </button>
+          </div>
+        </form>
+
+        <div className="absolute -top-8 left-6 bg-customGradient w-16 h-16 rounded-full">
+          <i className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 text-2xl text-white fa-solid fa-plus"></i>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default FeedbackEdit;

@@ -17,6 +17,10 @@ const feedbackSchema = new Schema(
       type: String,
       default: "Feature",
     },
+    status: {
+      type: String,
+      default: "Suggestion",
+    },
     totalUpvotes: {
       type: Number,
       default: 0,

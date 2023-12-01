@@ -9,6 +9,9 @@ import { CommentsProvider } from "./contexts/CommentsContext";
 
 import PageNotFound from "./pages/PageNotFound";
 import FeedbackDetails from "./pages/FeedbackDetails";
+import FeedbackEdit from "./pages/FeedbackEdit";
+
+import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
 
 function App() {
   return (
@@ -23,6 +26,7 @@ function App() {
                 path="/feedback/detail/:id"
                 element={<FeedbackDetails />}
               />
+              <Route path="/feedback/edit/:id" element={<FeedbackEdit />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </BrowserRouter>

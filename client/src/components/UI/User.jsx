@@ -27,8 +27,6 @@ export function User({ user, commentId, setReplies }) {
   const [reply, setReply] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log(user);
-
   async function createReply() {
     try {
       const res = await fetch(`${BASE_URL}/replies/${commentId}`, {

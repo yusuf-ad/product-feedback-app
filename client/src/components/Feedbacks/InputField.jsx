@@ -1,3 +1,4 @@
+import { useFeedbacks } from "../../contexts/FeedbacksContext";
 import { useNewFeedback } from "../../contexts/NewFeedbackContext";
 import Error from "../UI/Error";
 

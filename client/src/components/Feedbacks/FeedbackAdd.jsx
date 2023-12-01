@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import InputField from "./InputField";
 import TextAreaField from "./TextAreaField";
-import CategoryField from "./CategoryField";
+import SelectionField from "./SelectionField";
 import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
 
 import { useFeedbacks } from "../../contexts/FeedbacksContext";
@@ -24,7 +24,7 @@ export function FeedbackAdd() {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="container mx-auto max-w-2xl  ">
+    <div className="container max-w-2xl  ">
       <button onClick={handleReturnBack} className="flex items-center group">
         <span>
           <i className="text-blue-default  text-xs mr-4 fa-solid fa-chevron-left"></i>
@@ -40,7 +40,7 @@ export function FeedbackAdd() {
         <form onSubmit={handleSubmit} className="mt-12 flex flex-col gap-8">
           <InputField />
 
-          <CategoryField />
+          <SelectionField />
 
           <TextAreaField />
 

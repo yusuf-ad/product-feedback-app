@@ -6,6 +6,8 @@ import LoadingSpinner from "../components/UI/LoadingSpinner/LoadingSpinner";
 import { useComments } from "../contexts/CommentsContext";
 import { Comment } from "../components/Comments/Comment";
 
+import { Link } from "react-router-dom";
+
 import Error from "../components/UI/Error";
 
 function FeedbackDetails() {
@@ -59,9 +61,11 @@ function FeedbackDetails() {
           </span>
         </button>
 
-        <button className="btn bg-blue-default hover:bg-blue-hover">
-          Edit Feedback
-        </button>
+        <Link to={`/feedback/edit/${feedbackId}`}>
+          <button className="btn bg-blue-default hover:bg-blue-hover">
+            Edit Feedback
+          </button>
+        </Link>
       </header>
 
       <Feedback feedback={currentFeedback} />
