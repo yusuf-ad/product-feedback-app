@@ -3,10 +3,11 @@ import { useNewFeedback } from "../../contexts/NewFeedbackContext";
 
 function DropdownButton({
   menuItems = ["Feature", "UI", "UX", "Enhancement", "Bug"],
+  selected = menuItems[0],
 }) {
   const { dispatch } = useNewFeedback();
 
-  const [active, setActive] = useState(menuItems[0]);
+  const [active, setActive] = useState(selected);
 
   const menu = useRef(null);
 

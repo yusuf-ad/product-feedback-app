@@ -4,6 +4,7 @@ function SelectionField({
   select = "Category",
   selectMsg = "Choose a category for your feedback",
   menuItems,
+  selected,
 }) {
   return (
     <div>
@@ -12,7 +13,7 @@ function SelectionField({
       </label>
       <p className="text-gray-600 ">{selectMsg}</p>
 
-      <DropdownButton menuItems={menuItems} />
+      <DropdownButton selected={selected} menuItems={menuItems} />
     </div>
   );
 }

@@ -4,24 +4,31 @@ import TextAreaField from "../components/Feedbacks/TextAreaField";
 import { useEffect } from "react";
 import { useFeedbacks } from "../contexts/FeedbacksContext";
 import { useNewFeedback } from "../contexts/NewFeedbackContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function FeedbackEdit() {
   const { titleInput, detailsInput } = useNewFeedback();
   const { currentFeedback: feedback, handleGetFeedback } = useFeedbacks();
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleGetFeedback(id);
+  }, [handleGetFeedback, id]);
 
+  useEffect(() => {
     titleInput.current.value = `${feedback.title}`;
     detailsInput.current.value = `${feedback.details}`;
   });
 
+  function handleReturnBack() {
+    navigate(`/feedback/detail/${id}`);
+  }
+
   return (
-    <div className="container max-w-2xl  h-60">
-      <button className="flex items-center group">
+    <div className="container max-w-2xl ">
+      <button onClick={handleReturnBack} className="flex items-center group">
         <span>
           <i className="text-blue-default  text-xs mr-4 fa-solid fa-chevron-left"></i>
         </span>
@@ -36,18 +43,25 @@ function FeedbackEdit() {
         <form className="mt-16 flex flex-col gap-8">
           <InputField />
 
-          <SelectionField />
+          <SelectionField selected={feedback.category} />
 
           <SelectionField
             select="Update Status"
             selectMsg="Change feature state"
             menuItems={["Suggestion", "Planned", "In-Progress", "Live"]}
+            selected={feedback.status}
           />
 
           <TextAreaField />
 
-          <div className="flex gap-4 justify-end mt-12">
-            <button className="btn bg-grey-darkest hover:bg-grey-darker-hover">
+          <div className="flex gap-4 mt-6">
+            <button className="btn bg-red-default hover:bg-red-hover">
+              Delete
+            </button>
+            <button
+              onClick={handleReturnBack}
+              className="btn ml-auto bg-grey-darkest hover:bg-grey-darker-hover"
+            >
               Cancel
             </button>
             <button className="btn bg-purple-default hover:bg-purple-hover">

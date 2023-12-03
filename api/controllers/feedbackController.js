@@ -57,7 +57,9 @@ exports.createFeedback = async (req, res) => {
 
 exports.updateFeedback = async (req, res) => {
   try {
-    const feedback = await Feedback.findByIdAndUpdate(req.params.id, req.body);
+    const feedback = await Feedback.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
 
     res.status(200).json({
       status: "success",
