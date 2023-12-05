@@ -6,7 +6,8 @@ const NewFeedbackContext = createContext();
 const initialState = {
   title: "",
   details: "",
-  category: "feature",
+  category: "Feature",
+  status: "Suggestion",
   titleError: "",
   detailsError: "",
 };
@@ -18,6 +19,9 @@ function reducer(state, action) {
 
     case "changeDetails":
       return { ...state, details: action.payload };
+
+    case "changeStatus":
+      return { ...state, status: action.payload };
 
     case "changeCategory":
       return { ...state, category: action.payload };
@@ -37,8 +41,10 @@ function reducer(state, action) {
 }
 
 function NewFeedbackProvider({ children }) {
-  const [{ title, details, category, titleError, detailsError }, dispatch] =
-    useReducer(reducer, initialState);
+  const [
+    { title, details, category, titleError, status, detailsError },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   const { handleAddFeedback } = useFeedbacks();
 
@@ -78,6 +84,7 @@ function NewFeedbackProvider({ children }) {
         title,
         details,
         category,
+        status,
         titleError,
         detailsError,
         dispatch,

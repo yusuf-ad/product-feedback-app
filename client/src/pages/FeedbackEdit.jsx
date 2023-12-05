@@ -6,9 +6,20 @@ import { useFeedbacks } from "../contexts/FeedbacksContext";
 import { useNewFeedback } from "../contexts/NewFeedbackContext";
 import { useNavigate, useParams } from "react-router-dom";
 
+import BASE_URL from "../utils/BASE_URL";
+
 function FeedbackEdit() {
   const { titleInput, detailsInput } = useNewFeedback();
-  const { currentFeedback: feedback, handleGetFeedback } = useFeedbacks();
+  const {
+    currentFeedback: feedback,
+    handleGetFeedback,
+    setIsLoading,
+    feedbacks,
+    setFeedbacks,
+    isLoading,
+  } = useFeedbacks();
+
+  const { details, title, category, status } = useNewFeedback();
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -22,8 +33,44 @@ function FeedbackEdit() {
     detailsInput.current.value = `${feedback.details}`;
   });
 
+  const handleUpdateFeedback = async function (id) {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${BASE_URL}/feedbacks/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: title ? title : feedback.title,
+          category: category,
+          status: status,
+          details: details ? details : feedback.details,
+        }),
+      });
+      const { data } = await res.json();
+
+      console.log(data);
+
+      const filteredFeedbacks = feedbacks.filter(
+        (item) => item._id !== data._id
+      );
+      setFeedbacks([...filteredFeedbacks, data]);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  console.log(feedback.status, feedback.category);
+
   function handleReturnBack() {
     navigate(`/feedback/detail/${id}`);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    handleUpdateFeedback(id);
   }
 
   return (
@@ -40,7 +87,7 @@ function FeedbackEdit() {
       <div className="relative bg-white px-8 py-16 mt-20 rounded-xl shadow-sm">
         <h1 className="text-3xl">Editing 'Q&A within the challenge hubs'</h1>
 
-        <form className="mt-16 flex flex-col gap-8">
+        <form onSubmit={handleSubmit} className="mt-16 flex flex-col gap-8">
           <InputField />
 
           <SelectionField selected={feedback.category} />
@@ -50,6 +97,7 @@ function FeedbackEdit() {
             selectMsg="Change feature state"
             menuItems={["Suggestion", "Planned", "In-Progress", "Live"]}
             selected={feedback.status}
+            action="changeStatus"
           />
 
           <TextAreaField />

@@ -77,9 +77,11 @@ function FeedbacksProvider({ children }) {
         currentFeedback,
         setCurrentFeedback,
         feedbacks,
+        setFeedbacks,
         handleAddFeedback,
         handleGetFeedback,
         isLoading,
+        setIsLoading,
       }}
     >
       {children}

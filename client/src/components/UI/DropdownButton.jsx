@@ -4,10 +4,11 @@ import { useNewFeedback } from "../../contexts/NewFeedbackContext";
 function DropdownButton({
   menuItems = ["Feature", "UI", "UX", "Enhancement", "Bug"],
   selected = menuItems[0],
+  action = "changeCategory",
 }) {
-  const { dispatch } = useNewFeedback();
-
   const [active, setActive] = useState(selected);
+
+  const { dispatch } = useNewFeedback();
 
   const menu = useRef(null);
 
@@ -24,8 +25,8 @@ function DropdownButton({
   }
 
   useEffect(() => {
-    dispatch({ type: "changeCategory", payload: active });
-  }, [active, dispatch]);
+    dispatch({ type: action, payload: active });
+  }, [active, action, dispatch]);
 
   return (
     <div onClick={handleClick} className=" relative flex items-center mt-1">

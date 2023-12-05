@@ -1,3 +1,4 @@
+import { useState } from "react";
 import DropdownButton from "../UI/DropdownButton";
 
 function SelectionField({
@@ -5,6 +6,7 @@ function SelectionField({
   selectMsg = "Choose a category for your feedback",
   menuItems,
   selected,
+  action,
 }) {
   return (
     <div>
@@ -13,7 +15,11 @@ function SelectionField({
       </label>
       <p className="text-gray-600 ">{selectMsg}</p>
 
-      <DropdownButton selected={selected} menuItems={menuItems} />
+      <DropdownButton
+        selected={selected}
+        menuItems={menuItems}
+        action={action}
+      />
     </div>
   );
 }
