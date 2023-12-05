@@ -10,6 +10,10 @@ function DropdownButton({
 
   const { dispatch } = useNewFeedback();
 
+  useEffect(() => {
+    setActive(selected);
+  }, [selected]);
+
   const menu = useRef(null);
 
   function handleClick(e) {

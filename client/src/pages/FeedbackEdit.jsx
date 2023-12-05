@@ -16,7 +16,6 @@ function FeedbackEdit() {
     setIsLoading,
     feedbacks,
     setFeedbacks,
-    isLoading,
   } = useFeedbacks();
 
   const { details, title, category, status } = useNewFeedback();
@@ -53,6 +52,7 @@ function FeedbackEdit() {
       const filteredFeedbacks = feedbacks.filter(
         (item) => item._id !== data._id
       );
+
       setFeedbacks([...filteredFeedbacks, data]);
     } catch (err) {
       console.error(err);
@@ -61,7 +61,20 @@ function FeedbackEdit() {
     }
   };
 
-  console.log(feedback.status, feedback.category);
+  async function handleDeleteFeedback(id) {
+    setIsLoading(true);
+    try {
+      await fetch(`${BASE_URL}/feedbacks/${id}`, {
+        method: "DELETE",
+      });
+
+      setFeedbacks((feedbacks) => feedbacks.filter((item) => item._id !== id));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   function handleReturnBack() {
     navigate(`/feedback/detail/${id}`);
@@ -71,6 +84,14 @@ function FeedbackEdit() {
     e.preventDefault();
 
     handleUpdateFeedback(id);
+
+    handleReturnBack();
+  }
+
+  function handleDelete() {
+    handleDeleteFeedback(id);
+
+    navigate("/");
   }
 
   return (
@@ -103,7 +124,10 @@ function FeedbackEdit() {
           <TextAreaField />
 
           <div className="flex gap-4 mt-6">
-            <button className="btn bg-red-default hover:bg-red-hover">
+            <button
+              onClick={handleDelete}
+              className="btn bg-red-default hover:bg-red-hover"
+            >
               Delete
             </button>
             <button

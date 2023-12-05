@@ -1,4 +1,3 @@
-import { useState } from "react";
 import DropdownButton from "../UI/DropdownButton";
 
 function SelectionField({
