@@ -54,7 +54,7 @@ export function User({ user, commentId, setReplies }) {
 
   return (
     <>
-      <div className="flex items-center  gap-6 last:mb-2">
+      <div className="flex items-center  gap-6 last:mb-8">
         <div className="w-14 h-14 flex-shrink-0 self-start">
           <img className="rounded-full" src={user.userImg} alt="user" />
         </div>

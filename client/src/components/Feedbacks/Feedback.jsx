@@ -22,7 +22,11 @@ export function Feedback({ feedback }) {
           </p>
         </div>
       </Link>
-      <p className="ml-auto font-bold flex">
+      <p
+        className={`ml-auto font-bold flex ${
+          feedback.totalComments ? "" : "opacity-50"
+        }`}
+      >
         <span>
           <i className="text-gray-400 mr-2 fa-regular fa-comment"></i>
         </span>
