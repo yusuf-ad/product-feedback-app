@@ -1,84 +1,99 @@
-# REACT BEST PRACTICES
+# React Best Practices
 
-# Components
+## Components
 
-👎 Helper functions shouldn't read from the component's state
-👍 Extract them and pass only the values they need
+### Helper Functions
 
-👍 Don’t hardcode markup for navigation, filters or lists.
-👍 Use a configuration object and loop through the items instead.
+👎 **Avoid:** Reading from the component's state.
+👍 **Best Practice:** Extract and pass only necessary values.
 
-## Use Error Boundaries
+👍 **Best Practice:** Avoid hardcoding markup for navigation, filters, or lists. Use a configuration object and loop through items.
 
-## Pass Objects Instead of Primitives
+### Error Boundaries
 
-👎 Don't pass values on by one if they're related
-👍 Use an object that holds all of them instead
+### Props Handling
 
-👎 Try to avoid short-circuit operators
-👍 Use a ternary instead
+👎 **Avoid:** Passing related values individually.
+👍 **Best Practice:** Use an object to hold related values.
 
-👎 Nested ternaries are hard to read in JSX
-👍 Place them inside a component on their own
+👎 **Avoid:** Using short-circuit operators.
+👍 **Best Practice:** Use a ternary operator instead.
 
-👎 Don't write loops together with the rest of the markup
-👍 Extract the list in its own component
+👎 **Avoid:** Nested ternaries in JSX.
+👍 **Best Practice:** Place complex ternaries inside their own component.
 
-## Assign Default Props When Destructuring
+👎 **Avoid:** Writing loops within markup.
+👍 **Best Practice:** Extract loops into their own component.
 
-## Avoid Nested Render Functions
+### Default Props
 
-# State Management
+👍 **Best Practice:** Assign default props when destructuring.
 
-## Use Reducer with Context
+### Nested Render Functions
 
-👎 Don't use too many separate pieces of state
-👍 Unify them in a reducer instead
+👎 **Avoid:** Using nested render functions.
 
-## Prefer Hooks to HOCs and Render Props
+## State Management
 
-👎 Avoid using render props
-👍 Favor hooks for their simplicity and readability
+### Reducer with Context
 
-## Use Data Fetching Libraries
+👎 **Avoid:** Too many separate pieces of state.
+👍 **Best Practice:** Unify state using a reducer.
 
-## State Management Libraries
+### Hooks vs. HOCs and Render Props
 
-# Component Mental Models
+👎 **Avoid:** Using render props.
+👍 **Best Practice:** Prefer hooks for simplicity and readability.
 
-## Stateless & Stateful
+### Data Fetching
 
-# Application Structure
+👍 **Best Practice:** Utilize data fetching libraries.
 
-## Group by Route/Module
+### State Management Libraries
 
-👎 Don't group by technical details
-👍 Group by module/domain
+## Component Mental Models
 
-## Create a Common Module
+### Stateless & Stateful
 
-👍 Components like buttons, inputs and cards are used all over the place.
+## Application Structure
 
-## Use Absolute Paths
+### Grouping
 
-👎 Don't use relative paths
-👍 Absolute ones don't change
+👎 **Avoid:** Grouping by technical details.
+👍 **Best Practice:** Group by module/domain.
 
-## Wrap External Components
+### Common Module
 
-👎 Don't import directly
-👍 Export the component and use it referencing your internal module
+👍 **Best Practice:** Create a common module for reusable components like buttons, inputs, and cards.
 
-## Move Components in Folders
+### Path Handling
 
-# Performance
+👎 **Avoid:** Relative paths.
+👍 **Best Practice:** Use absolute paths for stability.
 
-## Don't Optimize Prematurely
+### External Components
 
-👍 Prioritize building readable and maintainable components before performance.
+👎 **Avoid:** Importing external components directly.
+👍 **Best Practice:** Export the component and reference it internally.
 
-# Watch The Bundle Size
+### Folder Structure
 
-## Rerenders - Callbacks, Arrays and Objects
+👍 **Best Practice:** Organize components into folders.
 
-## Test Correct Rendering
+## Performance
+
+### Optimization
+
+👍 **Best Practice:** Prioritize readable and maintainable components before optimizing for performance.
+
+### Bundle Size
+
+👍 **Best Practice:** Monitor and manage bundle size.
+
+### Rerenders
+
+👍 **Best Practice:** Avoid unnecessary rerenders caused by callbacks, arrays, and objects.
+
+### Testing
+
+👍 **Best Practice:** Ensure correct rendering through testing.
