@@ -71,6 +71,25 @@ function FeedbacksProvider({ children }) {
     }
   }, []);
 
+  const upvoteFeedback = async function (id) {
+    try {
+      const res = await fetch(`${BASE_URL}/feedbacks/${id}`, {
+        method: "PATCH",
+      });
+      const { data } = await res.json();
+
+      setFeedbacks((feedbacks) =>
+        feedbacks.map((feedback) =>
+          feedback._id === data._id
+            ? { ...feedback, upvoted: data.upvoted }
+            : feedback
+        )
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <FeedbacksContext.Provider
       value={{
@@ -80,6 +99,7 @@ function FeedbacksProvider({ children }) {
         setFeedbacks,
         handleAddFeedback,
         handleGetFeedback,
+        upvoteFeedback,
         isLoading,
         setIsLoading,
       }}

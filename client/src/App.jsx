@@ -11,8 +11,6 @@ import PageNotFound from "./pages/PageNotFound";
 import FeedbackDetails from "./pages/FeedbackDetails";
 import FeedbackEdit from "./pages/FeedbackEdit";
 
-import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
-
 function App() {
   return (
     <FeedbacksProvider>

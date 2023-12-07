@@ -75,6 +75,29 @@ exports.updateFeedback = async (req, res) => {
   }
 };
 
+exports.upvoteFeedback = async (req, res) => {
+  try {
+    const feedback = await Feedback.findById(req.params.id);
+
+    feedback.upvoted = !feedback.upvoted;
+
+    // save this document to the database
+    feedback.save();
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        feedback,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
 exports.deleteFeedback = async (req, res) => {
   try {
     const feedback = await Feedback.findByIdAndDelete(req.params.id);

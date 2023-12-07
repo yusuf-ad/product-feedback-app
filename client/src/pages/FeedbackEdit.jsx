@@ -36,7 +36,7 @@ function FeedbackEdit() {
     setIsLoading(true);
     try {
       const res = await fetch(`${BASE_URL}/feedbacks/${id}`, {
-        method: "PATCH",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title: title ? title : feedback.title,

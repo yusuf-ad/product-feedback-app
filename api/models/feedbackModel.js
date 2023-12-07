@@ -21,6 +21,10 @@ const feedbackSchema = new Schema(
       type: String,
       default: "Suggestion",
     },
+    upvoted: {
+      type: Boolean,
+      default: false,
+    },
     totalUpvotes: {
       type: Number,
       default: 0,

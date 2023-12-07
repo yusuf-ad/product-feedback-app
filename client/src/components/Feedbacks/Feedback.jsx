@@ -1,12 +1,27 @@
 import { Link } from "react-router-dom";
 
+import { useFeedbacks } from "../../contexts/FeedbacksContext";
+
 export function Feedback({ feedback }) {
+  const { upvoteFeedback } = useFeedbacks();
+
   return (
     <div className="bg-white p-6 rounded-xl mt-8 flex gap-8 items-center shadow-sm ">
-      <div className="bg-grey-light rounded-xl hover:bg-grey-hover transition-colors duration-200 cursor-pointer ">
-        <p className="flex flex-col items-center px-3 py-2 font-bold ">
+      <div
+        onClick={() => upvoteFeedback(feedback._id)}
+        className={` rounded-xl hover:bg-grey-hover transition-colors duration-200 cursor-pointer ${
+          feedback.upvoted
+            ? "bg-blue-default text-white hover:bg-blue-default"
+            : "bg-grey-light"
+        }`}
+      >
+        <p className={`flex flex-col items-center px-3 py-2 font-bold`}>
           <span>
-            <i className="text-blue-default text-sm  fa-solid fa-chevron-up"></i>
+            <i
+              className={`text-blue-default text-sm fa-solid fa-chevron-up ${
+                feedback.upvoted ? "text-white" : ""
+              }`}
+            ></i>
           </span>
           {feedback.totalUpvotes}
         </p>

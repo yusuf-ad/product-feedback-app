@@ -11,7 +11,8 @@ router
 router
   .route("/:id")
   .get(feedbackController.getFeedback)
-  .patch(feedbackController.updateFeedback)
+  .put(feedbackController.updateFeedback)
+  .patch(feedbackController.upvoteFeedback)
   .delete(feedbackController.deleteFeedback);
 
 module.exports = router;
