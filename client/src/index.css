@@ -9,14 +9,14 @@
   }
 
   body {
-    @apply py-16 px-24 bg-grey-light relative overflow-x-hidden min-h-screen;
+    @apply py-16 px-24 bg-grey-light  relative overflow-x-hidden min-h-screen;
   }
 
   h1,
   h2,
   h3,
   h4 {
-    @apply font-bold;
+    @apply font-bold text-grey-darkest;
   }
 
   h3 {

@@ -8,7 +8,7 @@ import Section from "../Layout/Section";
 import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
 import { Feedback } from "../Feedbacks/Feedback";
 import { useFeedbacks } from "../../contexts/FeedbacksContext";
-import { useEffect } from "react";
+import NoFeedback from "../UI/NoFeedback";
 
 function AppLayout() {
   const { feedbacks, isLoading } = useFeedbacks();
@@ -30,6 +30,7 @@ function AppLayout() {
               <Feedback key={feedback._id} feedback={feedback} />
             ))
           )}
+          {!feedbacks.length && !isLoading && <NoFeedback />}
         </Section>
       </Main>
     </div>
