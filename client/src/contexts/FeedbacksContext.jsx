@@ -78,13 +78,24 @@ function FeedbacksProvider({ children }) {
       });
       const { data } = await res.json();
 
+      console.log(data);
+
       setFeedbacks((feedbacks) =>
         feedbacks.map((feedback) =>
-          feedback._id === data._id
-            ? { ...feedback, upvoted: data.upvoted }
+          feedback._id === data.feedback._id
+            ? {
+                ...feedback,
+                upvoted: data.feedback.upvoted,
+                totalUpvotes: data.feedback.totalUpvotes,
+              }
             : feedback
         )
       );
+
+      if (data.feedback._id === currentFeedback._id) {
+        currentFeedback.upvoted = data.feedback.upvoted;
+        currentFeedback.totalUpvotes = data.feedback.totalUpvotes;
+      }
     } catch (err) {
       console.error(err);
     }

@@ -79,6 +79,9 @@ exports.upvoteFeedback = async (req, res) => {
   try {
     const feedback = await Feedback.findById(req.params.id);
 
+    if (feedback.upvoted) --feedback.totalUpvotes;
+    else ++feedback.totalUpvotes;
+
     feedback.upvoted = !feedback.upvoted;
 
     // save this document to the database

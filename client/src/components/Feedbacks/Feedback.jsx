@@ -9,10 +9,10 @@ export function Feedback({ feedback }) {
     <div className="bg-white p-6 rounded-xl mt-8 flex gap-8 items-center shadow-sm ">
       <div
         onClick={() => upvoteFeedback(feedback._id)}
-        className={` rounded-xl hover:bg-grey-hover transition-colors duration-200 cursor-pointer ${
+        className={`rounded-xl  transition-colors duration-200 cursor-pointer ${
           feedback.upvoted
-            ? "bg-blue-default text-white hover:bg-blue-default"
-            : "bg-grey-light"
+            ? "bg-blue-default text-white"
+            : "bg-grey-light hover:bg-grey-hover"
         }`}
       >
         <p className={`flex flex-col items-center px-3 py-2 font-bold`}>
