@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useFeedbacks } from "../../contexts/FeedbacksContext";
 
 const sortItems = [
   "Most upvotes",
@@ -8,7 +9,7 @@ const sortItems = [
 ];
 
 function SortButton() {
-  const [sortBy, setSortBy] = useState("Most upvotes");
+  const { sortBy, setSortBy } = useFeedbacks();
 
   const sortList = useRef(null);
 

@@ -7,6 +7,7 @@ import {
 } from "react";
 
 import BASE_URL from "../utils/BASE_URL";
+import { toCamelCase } from "../utils/toCamelCase";
 
 // 1) create context
 const FeedbacksContext = createContext();
@@ -16,7 +17,27 @@ function FeedbacksProvider({ children }) {
   const [currentFeedback, setCurrentFeedback] = useState({});
 
   const [feedbacks, setFeedbacks] = useState([]);
+  const [sortedFeedbacks, setSortedFeedbacks] = useState([]);
+
+  const [sortBy, setSortBy] = useState("Most upvotes");
+
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    switch (toCamelCase(sortBy)) {
+      case "mostUpvotes":
+        setSortedFeedbacks(feedbacks);
+        break;
+      case "leastUpvotes":
+        setSortedFeedbacks(
+          feedbacks.sort((a, b) => a["totalUpvotes"] - b["totalUpvotes"])
+        );
+        break;
+
+      default:
+        throw new Error("Error has occurred in sorting");
+    }
+  }, [sortBy, feedbacks]);
 
   useEffect(() => {
     async function getFeedbacks() {
@@ -107,6 +128,9 @@ function FeedbacksProvider({ children }) {
         currentFeedback,
         setCurrentFeedback,
         feedbacks,
+        sortBy,
+        setSortBy,
+        sortedFeedbacks,
         setFeedbacks,
         handleAddFeedback,
         handleGetFeedback,

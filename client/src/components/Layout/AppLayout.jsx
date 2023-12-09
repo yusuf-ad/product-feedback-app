@@ -11,7 +11,7 @@ import { useFeedbacks } from "../../contexts/FeedbacksContext";
 import NoFeedback from "../UI/NoFeedback";
 
 function AppLayout() {
-  const { feedbacks, isLoading } = useFeedbacks();
+  const { sortedFeedbacks, isLoading } = useFeedbacks();
 
   return (
     <div className="container grid grid-cols-4 gap-12">
@@ -21,16 +21,16 @@ function AppLayout() {
         <RoadmapSidebar />
       </Aside>
       <Main>
-        <SuggestionsHeader numFeedbacks={feedbacks.length} />
+        <SuggestionsHeader numFeedbacks={sortedFeedbacks.length} />
         <Section>
           {isLoading ? (
             <LoadingSpinner />
           ) : (
-            feedbacks.map((feedback) => (
+            sortedFeedbacks.map((feedback) => (
               <Feedback key={feedback._id} feedback={feedback} />
             ))
           )}
-          {!feedbacks.length && !isLoading && <NoFeedback />}
+          {!sortedFeedbacks.length && !isLoading && <NoFeedback />}
         </Section>
       </Main>
     </div>
