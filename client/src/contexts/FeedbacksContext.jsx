@@ -20,11 +20,13 @@ function FeedbacksProvider({ children }) {
   const [sortedFeedbacks, setSortedFeedbacks] = useState([]);
 
   const [sortBy, setSortBy] = useState("Most upvotes");
+  const [activeFilter, setActiveFilter] = useState("UI");
 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // The problem might be arising because Array.sort() mutates the original array in place, causing unexpected behavior when you set the state based on the sorted array directly.
+    // The problem might be arising because Array.sort() mutates the original array in place,
+    // causing unexpected behavior when you set the state based on the sorted array directly.
 
     let sorted = [...feedbacks]; // Create a new array instance
 
@@ -48,6 +50,20 @@ function FeedbacksProvider({ children }) {
         throw new Error("Error has occurred in sorting");
     }
   }, [sortBy, feedbacks]);
+
+  useEffect(() => {
+    let sorted = [...feedbacks]; // Create a new array instance
+
+    switch (activeFilter) {
+      case "All":
+        setSortedFeedbacks(sorted);
+        break;
+
+      default:
+        sorted = sorted.filter((fb) => fb.category === activeFilter);
+        setSortedFeedbacks([...sorted]);
+    }
+  }, [activeFilter, feedbacks]);
 
   useEffect(() => {
     async function getFeedbacks() {
@@ -136,6 +152,8 @@ function FeedbacksProvider({ children }) {
         currentFeedback,
         setCurrentFeedback,
         feedbacks,
+        activeFilter,
+        setActiveFilter,
         sortBy,
         setSortBy,
         sortedFeedbacks,
