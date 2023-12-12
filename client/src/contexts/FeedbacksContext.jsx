@@ -20,7 +20,7 @@ function FeedbacksProvider({ children }) {
   const [sortedFeedbacks, setSortedFeedbacks] = useState([]);
 
   const [sortBy, setSortBy] = useState("Most upvotes");
-  const [activeFilter, setActiveFilter] = useState("UI");
+  const [activeFilter, setActiveFilter] = useState("Feature");
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,11 +28,16 @@ function FeedbacksProvider({ children }) {
     // The problem might be arising because Array.sort() mutates the original array in place,
     // causing unexpected behavior when you set the state based on the sorted array directly.
 
-    let sorted = [...feedbacks]; // Create a new array instance
+    let sorted;
+
+    if (!sortedFeedbacks)
+      sorted = [...feedbacks]; // Create a new array instance
+    else sorted = [...sortedFeedbacks];
 
     switch (toCamelCase(sortBy)) {
       case "mostUpvotes":
-        setSortedFeedbacks(sorted);
+        sorted.sort((a, b) => b["totalUpvotes"] - a["totalUpvotes"]);
+        setSortedFeedbacks([...sorted]);
         break;
       case "leastUpvotes":
         sorted.sort((a, b) => a["totalUpvotes"] - b["totalUpvotes"]);
@@ -52,16 +57,16 @@ function FeedbacksProvider({ children }) {
   }, [sortBy, feedbacks]);
 
   useEffect(() => {
-    let sorted = [...feedbacks]; // Create a new array instance
+    let filtered = [...feedbacks]; // Create a new array instance
 
     switch (activeFilter) {
       case "All":
-        setSortedFeedbacks(sorted);
+        setSortedFeedbacks(filtered);
         break;
 
       default:
-        sorted = sorted.filter((fb) => fb.category === activeFilter);
-        setSortedFeedbacks([...sorted]);
+        filtered = filtered.filter((fb) => fb.category === activeFilter);
+        setSortedFeedbacks([...filtered]);
     }
   }, [activeFilter, feedbacks]);
 
