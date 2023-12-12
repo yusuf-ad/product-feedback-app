@@ -33,6 +33,16 @@ function FeedbacksProvider({ children }) {
           feedbacks.sort((a, b) => a["totalUpvotes"] - b["totalUpvotes"])
         );
         break;
+      case "mostComments":
+        setSortedFeedbacks(
+          feedbacks.sort((a, b) => b["totalComments"] - a["totalComments"])
+        );
+        break;
+      case "leastComments":
+        setSortedFeedbacks(
+          feedbacks.sort((a, b) => a["totalComments"] - b["totalComments"])
+        );
+        break;
 
       default:
         throw new Error("Error has occurred in sorting");
@@ -98,8 +108,6 @@ function FeedbacksProvider({ children }) {
         method: "PATCH",
       });
       const { data } = await res.json();
-
-      console.log(data);
 
       setFeedbacks((feedbacks) =>
         feedbacks.map((feedback) =>

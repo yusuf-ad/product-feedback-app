@@ -6,9 +6,9 @@ import Aside from "../Layout/Aside";
 import Main from "../Layout/Main";
 import Section from "../Layout/Section";
 import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
-import { Feedback } from "../Feedbacks/Feedback";
 import { useFeedbacks } from "../../contexts/FeedbacksContext";
 import NoFeedback from "../UI/NoFeedback";
+import FeedbacksList from "../Feedbacks/FeedbacksList";
 
 function AppLayout() {
   const { sortedFeedbacks, isLoading } = useFeedbacks();
@@ -23,13 +23,8 @@ function AppLayout() {
       <Main>
         <SuggestionsHeader numFeedbacks={sortedFeedbacks.length} />
         <Section>
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : (
-            sortedFeedbacks.map((feedback) => (
-              <Feedback key={feedback._id} feedback={feedback} />
-            ))
-          )}
+          {isLoading ? <LoadingSpinner /> : <FeedbacksList />}
+
           {!sortedFeedbacks.length && !isLoading && <NoFeedback />}
         </Section>
       </Main>
