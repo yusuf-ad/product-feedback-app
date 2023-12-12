@@ -1,4 +1,5 @@
 import { useFeedbacks } from "../../contexts/FeedbacksContext";
+import { FeedbackCategory } from "./FeedbackCategory";
 
 const categoryList = ["All", "UI", "UX", "Enhancement", "Feature", "Bug"];
 
@@ -22,18 +23,5 @@ export function FeedbackCategories() {
         ))}
       </ul>
     </div>
-  );
-}
-
-function FeedbackCategory({ category, isActive, handleClick }) {
-  return (
-    <li
-      onClick={() => handleClick(category)}
-      className={`feedbackCategory  ${
-        isActive ? "bg-blue-default text-white" : "hover:bg-grey-hover "
-      } `}
-    >
-      {category}
-    </li>
   );
 }

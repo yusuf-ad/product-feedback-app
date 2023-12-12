@@ -1,14 +1,16 @@
+import { Link } from "react-router-dom";
+
 export function RoadmapSidebar() {
   return (
     <div className="mt-8 rounded-xl p-6 bg-white shadow-sm">
       <div className="flex justify-between  items-center">
         <h3 className="">Roadmap</h3>
-        <a
+        <Link
           className="text-blue-default underline decoration-1 font-bold hover:text-blue-hover "
-          href="#"
+          to={"/roadmap"}
         >
           View
-        </a>
+        </Link>
       </div>
 
       <ul className="mt-6 space-y-1 ">

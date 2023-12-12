@@ -25,8 +25,8 @@ function FeedbacksProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // The problem might be arising because Array.sort() mutates the original array in place,
-    // causing unexpected behavior when you set the state based on the sorted array directly.
+    // ! The problem might be arising because Array.sort() mutates the original array in place,
+    // ! causing unexpected behavior when you set the state based on the sorted array directly.
 
     let sorted;
 

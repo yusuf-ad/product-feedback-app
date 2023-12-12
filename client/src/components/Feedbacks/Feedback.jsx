@@ -33,7 +33,7 @@ export function Feedback({ feedback }) {
           </h4>
           <p className="text-gray-600">{feedback.details}</p>
           <p className="bg-grey-light mt-3  text-blue-default font-bold inline-block px-4 py-2 rounded-xl">
-            {feedback.category || "category"}
+            {feedback.category}
           </p>
         </div>
       </Link>

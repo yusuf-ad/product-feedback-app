@@ -1,5 +1,5 @@
 function Aside({ children }) {
-  return <aside className="col-span-1">{children}</aside>;
+  return <aside className="col-span-1 min-w-min">{children}</aside>;
 }
 
 export default Aside;

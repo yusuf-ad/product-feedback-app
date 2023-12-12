@@ -10,6 +10,7 @@ import { CommentsProvider } from "./contexts/CommentsContext";
 import PageNotFound from "./pages/PageNotFound";
 import FeedbackDetails from "./pages/FeedbackDetails";
 import FeedbackEdit from "./pages/FeedbackEdit";
+import Roadmap from "./pages/Roadmap";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route index element={<AppLayout />} />
+              <Route path="/roadmap" element={<Roadmap />} />
               <Route path="/feedback/add" element={<FeedbackAdd />} />
               <Route
                 path="/feedback/detail/:id"
