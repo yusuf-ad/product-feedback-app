@@ -26,26 +26,24 @@ function FeedbacksProvider({ children }) {
   useEffect(() => {
     // The problem might be arising because Array.sort() mutates the original array in place, causing unexpected behavior when you set the state based on the sorted array directly.
 
+    let sorted = [...feedbacks]; // Create a new array instance
+
     switch (toCamelCase(sortBy)) {
       case "mostUpvotes":
-        setSortedFeedbacks(feedbacks);
+        setSortedFeedbacks(sorted);
         break;
       case "leastUpvotes":
-        setSortedFeedbacks(
-          feedbacks.sort((a, b) => a["totalUpvotes"] - b["totalUpvotes"])
-        );
+        sorted.sort((a, b) => a["totalUpvotes"] - b["totalUpvotes"]);
+        setSortedFeedbacks([...sorted]); // Set a new sorted array
         break;
       case "mostComments":
-        setSortedFeedbacks(
-          feedbacks.sort((a, b) => b["totalComments"] - a["totalComments"])
-        );
+        sorted.sort((a, b) => b["totalComments"] - a["totalComments"]);
+        setSortedFeedbacks([...sorted]); // Set a new sorted array
         break;
       case "leastComments":
-        setSortedFeedbacks(
-          feedbacks.sort((a, b) => a["totalComments"] - b["totalComments"])
-        );
+        sorted.sort((a, b) => a["totalComments"] - b["totalComments"]);
+        setSortedFeedbacks([...sorted]); // Set a new sorted array
         break;
-
       default:
         throw new Error("Error has occurred in sorting");
     }
