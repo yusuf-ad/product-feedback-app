@@ -97,3 +97,10 @@
 ### Testing
 
 👍 **Best Practice:** Ensure correct rendering through testing.
+
+React components should not have any business logic.
+
+Their main focus should be:
+
+1. displaying/updating UI.
+2. responding to users' interactions.

@@ -1,6 +1,13 @@
 import { Link } from "react-router-dom";
+import { useFeedbacks } from "../../contexts/FeedbacksContext";
 
 export function FeatureCard({ feature, color }) {
+  const { upvoteFeedback } = useFeedbacks();
+
+  function handleUpvote(id) {
+    upvoteFeedback(id);
+  }
+
   return (
     <li
       className={`border-t-8 border-t-${color} bg-white py-10 px-8 rounded-md `}
@@ -24,12 +31,19 @@ export function FeatureCard({ feature, color }) {
 
       <div className="mt-5 flex items-center">
         <div
-          className={`rounded-xl bg-grey-light hover:bg-grey-hover  transition-colors duration-200 cursor-pointer`}
+          onClick={() => handleUpvote(feature._id)}
+          className={`rounded-xl transition-colors duration-200 cursor-pointer ${
+            feature.upvoted
+              ? "bg-blue-default text-white hover:opacity-70"
+              : "bg-grey-light hover:bg-grey-hover"
+          }`}
         >
           <p className={`flex items-center gap-4 px-3 py-2 font-bold`}>
             <span>
               <i
-                className={`text-blue-default font-bold fa-solid fa-chevron-up`}
+                className={`text-blue-default font-bold fa-solid fa-chevron-up ${
+                  feature.upvoted ? "text-white" : ""
+                }`}
               ></i>
             </span>
             {feature.totalUpvotes}

@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useFeedbacks } from "../contexts/FeedbacksContext";
-import { useEffect, useRef } from "react";
 import { FeatureCardList } from "../components/UI/FeatureCardList";
 
 function Roadmap() {
