@@ -10,17 +10,39 @@ import BASE_URL from "../utils/BASE_URL";
 import { toCamelCase } from "../utils/toCamelCase";
 
 // 1) create context
-const FeedbacksContext = createContext();
+const FeedbacksContext = createContext({
+  currentFeedback: null,
+  setCurrentFeedback: () => {},
+  feedbacks: [],
+  setFeedbacks: () => {},
+  activeFilter: "",
+  setActiveFilter: () => {},
+  sortBy: "",
+  setSortBy: () => {},
+  sortedFeedbacks: [],
+  handleAddFeedback: () => {},
+  handleGetFeedback: () => {},
+  upvoteFeedback: () => {},
+  isLoading: false,
+  setIsLoading: () => {},
+});
 
 // 2) create provider
 function FeedbacksProvider({ children }) {
   const [currentFeedback, setCurrentFeedback] = useState({});
 
   const [feedbacks, setFeedbacks] = useState([]);
+
+  const plannedFeedbacks = feedbacks.filter((fb) => fb.status === "Planned");
+  const progressFeedbacks = feedbacks.filter(
+    (fb) => fb.status === "In-Progress"
+  );
+  const liveFeedbacks = feedbacks.filter((fb) => fb.status === "Live");
+
   const [sortedFeedbacks, setSortedFeedbacks] = useState([]);
 
   const [sortBy, setSortBy] = useState("Most upvotes");
-  const [activeFilter, setActiveFilter] = useState("Feature");
+  const [activeFilter, setActiveFilter] = useState("All");
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -31,8 +53,10 @@ function FeedbacksProvider({ children }) {
     let sorted;
 
     if (!sortedFeedbacks)
-      sorted = [...feedbacks]; // Create a new array instance
-    else sorted = [...sortedFeedbacks];
+      sorted = [...feedbacks].filter((fb) => fb.status === "Suggestion");
+    // Create a new array instance
+    else
+      sorted = [...sortedFeedbacks].filter((fb) => fb.status === "Suggestion");
 
     switch (toCamelCase(sortBy)) {
       case "mostUpvotes":
@@ -57,7 +81,7 @@ function FeedbacksProvider({ children }) {
   }, [sortBy, feedbacks]);
 
   useEffect(() => {
-    let filtered = [...feedbacks]; // Create a new array instance
+    let filtered = [...feedbacks].filter((fb) => fb.status === "Suggestion"); // Create a new array instance
 
     switch (activeFilter) {
       case "All":
@@ -168,6 +192,10 @@ function FeedbacksProvider({ children }) {
         upvoteFeedback,
         isLoading,
         setIsLoading,
+
+        progressFeedbacks,
+        liveFeedbacks,
+        plannedFeedbacks,
       }}
     >
       {children}
