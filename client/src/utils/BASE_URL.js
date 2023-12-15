@@ -1,3 +1,4 @@
-const BASE_URL = "http://localhost:3100/api/v1";
+const BASE_URL = "http://product-feedback-app-weld.vercel.app
+";
 
 export default BASE_URL;
