@@ -9,7 +9,7 @@ const replyRouter = require("./routes/replyRoutes");
 
 app.use(
   cors({
-    origin: ["https://product-feedback-app-client.vercel.app/"],
+    origin: ["https://product-feedback-app-client.vercel.app"],
     methods: ["POST", "PUT", "DELETE", "PATCH", "GET"],
     credentials: true,
   })
