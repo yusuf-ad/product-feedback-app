@@ -1,6 +1,7 @@
 const express = require("express");
 
 const app = express();
+
 const cors = require("cors");
 
 const feedbackRouter = require("./routes/feedbackRoutes");
@@ -9,7 +10,7 @@ const replyRouter = require("./routes/replyRoutes");
 
 app.use(
   cors({
-    origin: "https://product-feedback-app-client.vercel.app",
+    origin: ["https://product-feedback-app-client.vercel.app"],
     methods: ["*"],
     credentials: true,
   })
