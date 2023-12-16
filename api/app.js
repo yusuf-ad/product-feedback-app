@@ -11,7 +11,7 @@ app.use(
   cors({
     origin: "https://product-feedback-app-client.vercel.app",
     methods: ["*"],
-    credentials: false, // Temporary change
+    credentials: true,
   })
 );
 
