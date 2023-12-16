@@ -19,6 +19,9 @@ app.use(express.json());
 
 // ! WHERE OUR ROUTER MOUNTS
 // ! They are simply middleware functions that only apply for a certain URL.
+
+app.get("/", (req, res) => res.json("hello"));
+
 app.use("/api/v1/feedbacks", feedbackRouter);
 app.use("/api/v1/comments", commentRouter);
 app.use("/api/v1/replies", replyRouter);
