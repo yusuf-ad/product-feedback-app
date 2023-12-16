@@ -9,7 +9,7 @@ const replyRouter = require("./routes/replyRoutes");
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://product-feedback-app-client.vercel.app/",
     methods: ["*"],
     credentials: false, // Temporary change
   })
