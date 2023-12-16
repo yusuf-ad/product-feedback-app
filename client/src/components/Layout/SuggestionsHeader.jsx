@@ -7,7 +7,7 @@ export function SuggestionsHeader({ numFeedbacks }) {
       <div className="md:flex md:justify-normal md:gap-4 flex  justify-between ">
         <div className="flex items-center gap-4">
           <img
-            className="md:inline-block hidden"
+            className="sm:inline-block hidden"
             src="./assets/suggestions/icon-suggestions.svg"
             alt="bulb"
           />
