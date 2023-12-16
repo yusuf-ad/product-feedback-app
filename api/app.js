@@ -10,7 +10,7 @@ const replyRouter = require("./routes/replyRoutes");
 app.use(
   cors({
     origin: "http://localhost:5173",
-    methods: ["POST", "PUT", "DELETE", "PATCH", "GET"],
+    methods: ["*"],
     credentials: true,
   })
 );
