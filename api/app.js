@@ -7,13 +7,14 @@ const feedbackRouter = require("./routes/feedbackRoutes");
 const commentRouter = require("./routes/commentRoutes");
 const replyRouter = require("./routes/replyRoutes");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["*"],
+    credentials: false, // Temporary change
+  })
+);
 
-// {
-//   origin: ["https://product-feedback-app-client.vercel.app"],
-//   methods: ["POST", "PUT", "DELETE", "PATCH", "GET"],
-//   credentials: true,
-// }
 // req.body'i kullanmak için lazım
 app.use(express.json());
 
