@@ -3,11 +3,17 @@ import SortButton from "../UI/SortButton";
 
 export function SuggestionsHeader({ numFeedbacks }) {
   return (
-    <header className="px-6 py-4 bg-grey-darker rounded-xl flex flex-col  gap-8  ">
-      <div className="md:block flex justify-between  ">
+    <header className="md:px-6 md:py-4 px-4 py-4 bg-grey-darker rounded-xl flex md:flex-row flex-col  gap-8  ">
+      <div className="md:flex md:justify-normal md:gap-4 flex  justify-between ">
         <div className="flex items-center gap-4">
-          <img src="./assets/suggestions/icon-suggestions.svg" alt="bulb" />
-          <p className="font-bold  text-white">{numFeedbacks} Suggestions</p>
+          <img
+            className="md:inline-block hidden"
+            src="./assets/suggestions/icon-suggestions.svg"
+            alt="bulb"
+          />
+          <p className="font-bold md:mt-1  text-white">
+            {numFeedbacks} Suggestions
+          </p>
         </div>
         <SortButton />
       </div>
