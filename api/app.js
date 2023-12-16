@@ -2,7 +2,6 @@ const express = require("express");
 
 const app = express();
 const cors = require("cors");
-const Feedback = require("./models/feedbackModel");
 
 const feedbackRouter = require("./routes/feedbackRoutes");
 const commentRouter = require("./routes/commentRoutes");
@@ -21,26 +20,7 @@ app.use(express.json());
 // ! WHERE OUR ROUTER MOUNTS
 // ! They are simply middleware functions that only apply for a certain URL.
 
-// app.get("/", (req, res) => res.json("hello, from the server"));
-
-app.get("/api/v1/feedbacks", async (req, res) => {
-  try {
-    const feedbacks = await Feedback.find();
-
-    res.status(200).json({
-      results: feedbacks.length,
-      status: "success",
-      data: {
-        feedbacks,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-});
+app.get("/", (req, res) => res.json("hello, from the server"));
 
 app.use("/api/v1/feedbacks", feedbackRouter);
 app.use("/api/v1/comments", commentRouter);
