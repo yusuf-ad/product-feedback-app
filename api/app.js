@@ -11,7 +11,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     methods: ["*"],
-    credentials: true,
+    credentials: false, // Temporary change
   })
 );
 
