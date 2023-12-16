@@ -5,7 +5,7 @@ export function RoadmapSidebar() {
   const { plannedFeedbacks, progressFeedbacks, liveFeedbacks } = useFeedbacks();
 
   return (
-    <div className="mt-8 rounded-xl p-6 bg-white shadow-sm">
+    <div className="rounded-xl p-6 bg-white shadow-sm">
       <div className="flex justify-between  items-center">
         <h3 className="">Roadmap</h3>
         <Link

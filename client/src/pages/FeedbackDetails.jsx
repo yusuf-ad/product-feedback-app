@@ -47,7 +47,7 @@ function FeedbackDetails() {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="container max-w-4xl ">
+    <div className="container max-w-4xl md:p-0 p-12 ">
       <header className="flex justify-between">
         <button
           onClick={() => navigate("/")}

@@ -9,7 +9,7 @@
   }
 
   body {
-    @apply py-20 px-28 bg-grey-light  relative overflow-x-hidden min-h-screen;
+    @apply lg:py-20 lg:px-8 md:py-16    bg-grey-light  relative overflow-x-hidden min-h-screen;
   }
 
   h1,

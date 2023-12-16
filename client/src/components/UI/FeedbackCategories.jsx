@@ -11,7 +11,7 @@ export function FeedbackCategories() {
   }
 
   return (
-    <div className="mt-8 rounded-xl p-6 bg-white shadow-sm">
+    <div className=" rounded-xl p-6 bg-white shadow-sm">
       <ul className="flex flex-wrap gap-4">
         {categoryList.map((category) => (
           <FeedbackCategory

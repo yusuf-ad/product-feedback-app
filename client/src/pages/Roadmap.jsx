@@ -34,7 +34,7 @@ function Roadmap() {
         </Link>
       </header>
 
-      <main className="mt-14 flex gap-14">
+      <main className="mt-14 md:flex md:space-y-0 md:p-0 space-y-8 p-8 gap-14">
         {/* status-1 */}
         <div className="flex-1">
           <header>
