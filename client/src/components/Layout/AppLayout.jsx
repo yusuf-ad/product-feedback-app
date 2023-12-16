@@ -14,7 +14,7 @@ function AppLayout() {
   const { sortedFeedbacks, isLoading } = useFeedbacks();
 
   return (
-    <div className="container grid grid-cols-4 gap-12 ">
+    <div className="container grid grid-cols-4 gap-12 md:p-0 p-8">
       <Aside>
         <FeedbackBoard />
         <FeedbackCategories />
