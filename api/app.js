@@ -19,7 +19,7 @@ app.use(express.json());
 app.get("/", (req, res) => res.json("hello, from the server"));
 
 app.use("/api/v1/feedbacks", feedbackRouter);
-// app.use("/api/v1/comments", commentRouter);
-// app.use("/api/v1/replies", replyRouter);
+app.use("/api/v1/comments", commentRouter);
+app.use("/api/v1/replies", replyRouter);
 
 module.exports = app;
