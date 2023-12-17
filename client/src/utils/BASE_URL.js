@@ -1,3 +1,4 @@
-const BASE_URL = "https://product-feedback-app-api.vercel.app/api/v1";
+const BASE_URL =
+  "https://sleepy-citadel-62968-c7982efd0856.herokuapp.com/api/v1";
 
 export default BASE_URL;
